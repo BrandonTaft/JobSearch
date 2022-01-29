@@ -6,14 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "BrandonTaft",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
+    "cheerio": "^1.0.0-rc.10",
     "cors": "^2.8.5",
-    "dotenv": "^14.3.2",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
-    "mongoose": "^6.1.8"
+    "mongoose": "^6.1.8",
+    "node-fetch": "^3.2.0",
+    "node-mailer": "^0.1.1",
+    "puppeteer": "^13.1.2"
   }
 }
