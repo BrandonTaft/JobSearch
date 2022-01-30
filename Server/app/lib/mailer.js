@@ -1,9 +1,10 @@
-const nodemailer = require('node-mailer');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 
 //create and define reusable transporter object
 //specifying what email service, name, and password
+//rejectUnauthorized: false means it won't fail on invalid tls certificate
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -23,11 +24,11 @@ var mailOptions = {
     text: ""
 };
 
-//create function to specify subject and text of email
+//specify subject and text of email
 //we are sending html so we can provide link w/ a tag
 //then send email with specified mail options
 //if errors it logs them, otherwise it prints success and email info
-export default function sendMail(subject,text,link,url) {
+function sendMail(subject,text,link,url) {
     console.log(process.env.PASS)
     console.log(process.env.USER)
     mailOptions.subject = subject;
@@ -41,3 +42,5 @@ export default function sendMail(subject,text,link,url) {
         });
 
 }
+
+module.exports.sendMail = sendMail

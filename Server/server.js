@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./app/config/db.config');
+const scraper = require('./app/lib/scraper');
 const app = express();
 
 require('dotenv').config();
@@ -27,6 +28,10 @@ db.mongoose.connect(db.url, {
         console.log("Cannot connect to database!", err);
         process.exit();
     });
+
+scraper.fetchFromGoogle((data) => {
+    console.log( scraper.getLatestJobs(data))    
+});
 
 app.get('/', (req, res) => {
     res.json({ message: "Hello World" });
