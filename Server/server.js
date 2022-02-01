@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./app/config/db.config');
 const scraper = require('./app/lib/scraper');
+const google = require('./app/lib/google')
 const app = express();
 
 require('dotenv').config();
@@ -29,13 +30,18 @@ db.mongoose.connect(db.url, {
         process.exit();
     });
 
-scraper.fetchFromGoogle((data) => {
-    console.log( scraper.getLatestJobs(data))    
-});
+
+//scraper.sortJobs()
+google.getGoogleJobs()
 
 app.get('/', (req, res) => {
     res.json({ message: "Hello World" });
 });
+
+app.get('/googlejobs', (req, res) => {
+    google.getGoogleJobs()
+})
+
 
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {
