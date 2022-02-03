@@ -30,9 +30,9 @@ db.mongoose.connect(db.url, {
         process.exit();
     });
 
-
+scraper.getJobs()
 //scraper.sortJobs()
-google.getGoogleJobs()
+//google.getGoogleJobs()
 
 app.get('/', (req, res) => {
     res.json({ message: "Hello World" });
