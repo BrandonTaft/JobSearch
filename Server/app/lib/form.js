@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs/promises');
-const url = "https://www.tools4testing.com/contents/selenium/testpages/registration-form-testpage"
+const url = "https://www.brandontaft.net/"
 async function getInfo() {
 
     const browser = await puppeteer.launch();
@@ -17,7 +17,7 @@ await page.type("#fullname", "Brandon")
 //Promise.all returns an array
   //await Promise.all([page.click("#submit"), page.waitForNavigation()])
   //const info = await page.$eval("#message", el => el.textContent)
-await page.click("#Submit")
+await page.click(contact-form > div.controls > div > div.col-md-12.text-center > button)
   //console.log(info)
   await page.screenshot({path: "test.png", fullPage: true})
 
