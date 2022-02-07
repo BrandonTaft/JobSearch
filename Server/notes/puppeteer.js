@@ -5,7 +5,7 @@ const cron = require('node-cron');
 // *******************TAKE SCREENSHOT OF WEBPAGE ****************************
 
 //Use async to be able to use await for chromium 
-async function start() {
+async function getScreenShot() {
 
     // Launch Chromium and wait for it to load
     const browser = await puppeteer.launch();

@@ -4,6 +4,7 @@ const cors = require('cors');
 const config = require('./app/config/db.config');
 const scraper = require('./app/lib/scraper');
 const google = require('./app/lib/google')
+const form = require('./app/lib/form')
 const app = express();
 
 require('dotenv').config();
@@ -30,10 +31,10 @@ db.mongoose.connect(db.url, {
         process.exit();
     });
 
-scraper.getJobs()
+//scraper.getJobs()
 //scraper.sortJobs()
 //google.getGoogleJobs()
-
+form.getInfo()
 app.get('/', (req, res) => {
     res.json({ message: "Hello World" });
 });
