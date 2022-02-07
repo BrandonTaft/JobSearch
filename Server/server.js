@@ -3,8 +3,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./app/config/db.config');
 const scraper = require('./app/lib/scraper');
+const linkedIn = require('./app/lib/linkedIn')
 const google = require('./app/lib/google')
 const form = require('./app/lib/form')
+const puppeteer = require('./app/lib/puppeteer')
 const app = express();
 
 require('dotenv').config();
@@ -31,10 +33,10 @@ db.mongoose.connect(db.url, {
         process.exit();
     });
 
+    
+//puppeteer.getScreenShot()
 //scraper.getJobs()
-//scraper.sortJobs()
-//google.getGoogleJobs()
-form.getInfo()
+linkedIn.getLinkedInJobs()
 app.get('/', (req, res) => {
     res.json({ message: "Hello World" });
 });

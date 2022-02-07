@@ -14,13 +14,13 @@ async function getScreenShot() {
     const page = await browser.newPage();
     
     //then navigates to the provided url
-    await page.goto('https://en.wikipedia.org/wiki/Fallout_(video_game)');
+    await page.goto('https://www.google.com/search?q=software+developer&oq=jobs&aqs=chrome.0.69i59j35i39j69i60j69i61j69i60j69i65l2j69i60.3120j0j7&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&ved=2ahUKEwiho8eg8e31AhXiJ0QIHacyADQQutcGKAF6BAgdEAc&sxsrf=APq-WBsSjwLqc69srREBSjLQ9bSuOoZ5DA:1644246961616#fpstate=tldetail&htivrt=jobs&htidocid=-N6mPNHHlpgAAAAAAAAAAA%3D%3D');
 
     //take screenshot of url, gives it a name, tells it to shoot the whole page
-    await page.screenshot({path: "give-it-a-filename.png", fullPage: true})
+    await page.screenshot({path: "give-it-a-filename.png"})
 
     //close browser or itll sit there and keep running
-    await browswer.close()
+    await browser.close()
 
 }
     
@@ -103,4 +103,6 @@ async function start() {
 }
     //run every 5 secs
     //cron.schedule("*/5 * * * * *", start)
-    start()
+    //start()
+
+    module.exports.getScreenShot = getScreenShot;
