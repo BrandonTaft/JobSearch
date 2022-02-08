@@ -17,7 +17,7 @@ await page.type("#fullname", "Brandon")
 //Promise.all returns an array
   //await Promise.all([page.click("#submit"), page.waitForNavigation()])
   //const info = await page.$eval("#message", el => el.textContent)
-await page.click(contact-form > div.controls > div > div.col-md-12.text-center > button)
+await page.click(contact-form > div.controls > div > div.col-md-12 .text-center > button)
   //console.log(info)
   await page.screenshot({path: "test.png", fullPage: true})
 

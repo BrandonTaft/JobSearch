@@ -6,7 +6,8 @@ const scraper = require('./app/lib/scraper');
 const linkedIn = require('./app/lib/linkedIn')
 const google = require('./app/lib/google')
 const form = require('./app/lib/form')
-const puppeteer = require('./app/lib/puppeteer')
+const puppeteer = require('./app/lib/puppeteer-job');
+
 const app = express();
 
 require('dotenv').config();
@@ -33,10 +34,12 @@ db.mongoose.connect(db.url, {
         process.exit();
     });
 
-    
+    //linkedIn.getLinkedInJobs()
 //puppeteer.getScreenShot()
 //scraper.getJobs()
-linkedIn.getLinkedInJobs()
+linkedIn.getLinkedInJobs((data) => {
+    linkedIn.getJobList(data)
+});
 app.get('/', (req, res) => {
     res.json({ message: "Hello World" });
 });
