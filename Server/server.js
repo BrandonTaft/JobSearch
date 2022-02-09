@@ -2,9 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./app/config/db.config');
-const scraper = require('./app/lib/scraper');
+const google = require('./app/lib/google');
 const linkedIn = require('./app/lib/linkedIn')
-const google = require('./app/lib/google')
+const serp = require('./app/lib/serp')
 const form = require('./app/lib/form')
 const puppeteer = require('./app/lib/puppeteer-job');
 
@@ -36,10 +36,10 @@ db.mongoose.connect(db.url, {
 
     //linkedIn.getLinkedInJobs()
 //puppeteer.getScreenShot()
-//scraper.getJobs()
-linkedIn.getLinkedInJobs((data) => {
-    linkedIn.getJobList(data)
-});
+google.getJobs()
+serp.getGoogleJobs()
+linkedIn.getLinkedInJobs()
+
 app.get('/', (req, res) => {
     res.json({ message: "Hello World" });
 });

@@ -1,31 +1,43 @@
+const puppeteer = require('puppeteer');
 
-function getGoogleJobs() {
-    const SerpApi = require('google-search-results-nodejs');
-    const search = new SerpApi.GoogleSearch("d2498eb38600b5fef854d9462c8f8b1ec0cda0b4d06b3cd4e2fbbe08379730a3");
-    const params = {
-        engine: "google_jobs",
-        google_domain: "google.com",
-        q: "junior software developers",
-        hl: "en",
-        gl: "us",
-        uule: "&uule=w+CAIQICIHQXRsYW50YQ",
-        lrad: "2000",
-        start: "0"
-    };
+const url = 'https://www.google.com/search?q=software+developer+entry+level+jobs&oq=jobs&aqs=chrome.0.69i59j35i39j69i60j69i61j69i60j69i65l2j69i60.3120j0j7&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&ved=2ahUKEwiho8eg8e31AhXiJ0QIHacyADQQutcGKAF6BAgdEAc&sxsrf=APq-WBsSjwLqc69srREBSjLQ9bSuOoZ5DA:1644246961616#fpstate=tldetail&htivrt=jobs&htidocid=EaIjisjqEGsAAAAAAAAAAA%3D%3D';
+//Launch Chromium, Open New Page, Navigate To URL
+async function getJobs() {
+    const browser = await puppeteer.launch({
+        headless: false
+    });
+    const page = await browser.newPage();
+    await page.goto(url);
+    await page.waitForTimeout(1000);
 
-    const callback = function (data) {
-        let string = "Computer Science";
-        let myJobs = data.jobs_results
-        myJobs.forEach((job) => {
-            if (job.description.includes(string) || job.title.includes("No Experience Required"))
-                console.log("Name: ", job.company_name, ", Title: ", job.title )
-        })
+    let titles = await page.evaluate(() =>
+        Array.from(
+            document.querySelectorAll('.BjJfJf'),
+            (element) => element.textContent
+        )
+    );
 
-    };
+    let descriptions = await page.evaluate(() =>
+        Array.from(
+            document.querySelectorAll('.HBvzbc'),
+            (element) => element.textContent
+        )
+    );
 
-    // Show result as JSON
-    search.json(params, callback);
+    //Create hrefs Array From Div With .EDblX Classname => 
+    //Its First Element (div .B8oxKe) ==> Its 1st Element <span>(DaDV9e) =>
+    //Finally The href Inside Of The Span
+    const hrefs = await page.evaluate(() =>
+        Array.from(
+            document.querySelectorAll(".EDblX"),
+            (element) =>
+                element.firstElementChild.firstElementChild.firstElementChild.href
+        )
+    );
+console.log(descriptions)
+    //Close Browser to keep the functon from running forever
+    browser.close();
+};
 
-}
 
-module.exports.getGoogleJobs = getGoogleJobs;
+module.exports = { getJobs };
