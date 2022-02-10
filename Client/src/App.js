@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import "./App.css";
+import GetGoogleJobs from "./components/GetGoogleJobs";
+import CheckPortfolio from "./components/CheckPortfolio";
+import PageNotFound from "./components/PageNotFound";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    return (
+      <div>
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <a href="/google-jobs" className="navbar-brand">
+            My Google Jobs
+          </a>
+          <div className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link to={"/google-jobs"} className="nav-link">
+                Jobs
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={"/portfolio"} className="nav-link">
+                Check Portfolio
+              </Link>
+            </li>
+          </div>
+        </nav>
+        <div className="container mt-3">
+          <Routes>
+          <Route exact path="/google-jobs" element={<GetGoogleJobs/>}/>
+          <Route exact path="/portfolio" element={<CheckPortfolio/>}/>
+          <Route path="/*" element={<PageNotFound/>}/>
+          </Routes>
+        </div>
+      </div>
+    );
+  }
 
 export default App;

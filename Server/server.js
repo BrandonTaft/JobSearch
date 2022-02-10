@@ -13,11 +13,11 @@ const app = express();
 
 require('dotenv').config();
 
-var corsOptions = {
-    origin: 'http://127.0.0.1:8000'
-};
+// var corsOptions = {
+//     origin: 'http://127.0.0.1:8000'
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -35,27 +35,27 @@ db.mongoose.connect(db.url, {
         process.exit();
     });
 
-app.get('/check-portfolio', (req, res) => {
+app.get('/api/check-portfolio', (req, res) => {
     folio.checkPortfolio().then(function(pic){
         res.send(pic)
     });
 });
 
-app.get('/googlejobs', (req, res) => {
+app.get('/api/googlejobs', (req, res) => {
     google.getJobs().then(function(titles){
         res.json(titles)
     });
     
 });
 
-app.get('/linkedinjobs', (req, res) => {
+app.get('/api/linkedinjobs', (req, res) => {
     linkedIn.getLinkedInJobs().then(function(info){
         res.json(info)
     });
     
 })
 
-app.get('/serpjobs', (req, res) => {
+app.get('/api/serpjobs', (req, res) => {
     const SerpApi = require('google-search-results-nodejs');
     const search = new SerpApi.GoogleSearch("d2498eb38600b5fef854d9462c8f8b1ec0cda0b4d06b3cd4e2fbbe08379730a3");
     const params = {
