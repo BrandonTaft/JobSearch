@@ -35,12 +35,6 @@ db.mongoose.connect(db.url, {
         process.exit();
     });
 
-
-//puppeteer.getScreenShot()
-// google.getJobs()
-// serp.getGoogleJobs()
-// linkedIn.getLinkedInJobs()
-
 app.get('/check-portfolio', (req, res) => {
     folio.checkPortfolio().then(function(pic){
         res.send(pic)
@@ -85,7 +79,6 @@ app.get('/serpjobs', (req, res) => {
         res.json(myJobs)
     };
 
-    // Show result as JSON
    search.json(params, callback);
     
     
