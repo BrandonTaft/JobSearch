@@ -20,12 +20,11 @@ function getGoogleJobs() {
             if (job.description.includes(string) || job.title.includes("No Experience Required"))
                 console.log("Name: ", job.company_name, ", Title: ", job.title )
         })
-
+        res.json(myJobs)
     };
 
     // Show result as JSON
-    search.json(params, callback);
-
+   search.json(params, callback);
 }
 
-module.exports.getGoogleJobs = getGoogleJobs;
+module.exports = {getGoogleJobs};

@@ -8,9 +8,10 @@ async function checkPortfolio() {
     await page.goto(url);
 
     //take screenshot of url, gives it a name, tells it to shoot the whole page
-    await page.screenshot({path: "give-it-a-filename.png", fullPage: true})
+    const pic = await page.screenshot({path: "status-pic.png", fullPage: true})
 
     //close browser or itll sit there and keep running
     await browser.close()
+    return pic
 }
 module.exports.checkPortfolio = checkPortfolio

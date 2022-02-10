@@ -23,6 +23,7 @@ async function getLinkedInJobs() {
     );
     
     browser.close();
+    return (info)
 }
 
 // let titles = await page.evaluate(() =>

@@ -10,8 +10,8 @@ async function getJobs() {
     await page.goto(url);
     await page.waitForTimeout(1000);
 
-    let titles = await page.evaluate(() =>
-        Array.from(
+    let titles = await page.evaluate((req, res) =>
+       Array.from(
             document.querySelectorAll('.BjJfJf'),
             (element) => element.textContent
         )
@@ -34,9 +34,11 @@ async function getJobs() {
                 element.firstElementChild.firstElementChild.firstElementChild.href
         )
     );
-console.log(descriptions)
+         
     //Close Browser to keep the functon from running forever
     browser.close();
+    return titles; 
+    
 };
 
 

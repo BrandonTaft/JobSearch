@@ -3,10 +3,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./app/config/db.config');
 const google = require('./app/lib/google');
-const linkedIn = require('./app/lib/linkedIn')
+const linkedIn = require('./app/lib/linkedIn');
+const folio = require('./app/lib/folio-testio');
 const serp = require('./app/lib/serp')
 const form = require('./app/lib/form')
-const puppeteer = require('./app/lib/puppeteer-job');
+
 
 const app = express();
 
@@ -34,18 +35,60 @@ db.mongoose.connect(db.url, {
         process.exit();
     });
 
-    //linkedIn.getLinkedInJobs()
-//puppeteer.getScreenShot()
-google.getJobs()
-serp.getGoogleJobs()
-linkedIn.getLinkedInJobs()
 
-app.get('/', (req, res) => {
-    res.json({ message: "Hello World" });
+//puppeteer.getScreenShot()
+// google.getJobs()
+// serp.getGoogleJobs()
+// linkedIn.getLinkedInJobs()
+
+app.get('/check-portfolio', (req, res) => {
+    folio.checkPortfolio().then(function(pic){
+        res.send(pic)
+    });
 });
 
 app.get('/googlejobs', (req, res) => {
-    google.getGoogleJobs()
+    google.getJobs().then(function(titles){
+        res.json(titles)
+    });
+    
+});
+
+app.get('/linkedinjobs', (req, res) => {
+    linkedIn.getLinkedInJobs().then(function(info){
+        res.json(info)
+    });
+    
+})
+
+app.get('/serpjobs', (req, res) => {
+    const SerpApi = require('google-search-results-nodejs');
+    const search = new SerpApi.GoogleSearch("d2498eb38600b5fef854d9462c8f8b1ec0cda0b4d06b3cd4e2fbbe08379730a3");
+    const params = {
+        engine: "google_jobs",
+        google_domain: "google.com",
+        q: "junior software developers",
+        hl: "en",
+        gl: "us",
+        uule: "&uule=w+CAIQICIHQXRsYW50YQ",
+        lrad: "2000",
+        start: "0"
+    };
+
+    const callback = function (data) {
+        let string = "Computer Science";
+        let myJobs = data.jobs_results
+        myJobs.forEach((job) => {
+            if (job.description.includes(string) || job.title.includes("No Experience Required"))
+                console.log("Name: ", job.company_name, ", Title: ", job.title )
+        })
+        res.json(myJobs)
+    };
+
+    // Show result as JSON
+   search.json(params, callback);
+    
+    
 })
 
 
