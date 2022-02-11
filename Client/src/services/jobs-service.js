@@ -5,8 +5,8 @@ class JobsService {
   getAllGoogleJobs() {
     return http.get("/googlejobs");
   }
-  get(id) {
-    return http.get(`//${id}`);
+  checkPortfolio() {
+    return http.get(`/check-portfolio`);
   }
   create(data) {
     return http.post("/", data);

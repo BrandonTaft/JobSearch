@@ -37,7 +37,7 @@ db.mongoose.connect(db.url, {
 
 app.get('/api/check-portfolio', (req, res) => {
     folio.checkPortfolio().then(function(pic){
-        res.send(pic)
+        res.sendFile("/Users/BrandonTaft/Desktop/Project/Server/status-pic.png")
     });
 });
 
