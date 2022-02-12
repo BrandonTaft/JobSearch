@@ -1,11 +1,13 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
+import "./css/responsive.css"
 import GetGoogleJobs from "./components/GetGoogleJobs";
 import CheckPortfolio from "./components/CheckPortfolio";
 import PageNotFound from "./components/PageNotFound";
 function App() {
     return (
+      
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <a href="/google-jobs" className="navbar-brand">

@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
 const config = require('./app/config/db.config');
 const google = require('./app/lib/google');
 const linkedIn = require('./app/lib/linkedIn');
@@ -13,14 +15,11 @@ const app = express();
 
 require('dotenv').config();
 
-// var corsOptions = {
-//     origin: 'http://127.0.0.1:8000'
-// };
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use('/', express.static(path.join(__dirname, '/')));
 
 const db = require('./app/models');
 db.mongoose.connect(db.url, {
@@ -35,24 +34,27 @@ db.mongoose.connect(db.url, {
         process.exit();
     });
 
+    
+    
+folio.start()
+
 app.get('/api/check-portfolio', (req, res) => {
-    folio.checkPortfolio().then(function(pic){
-        res.sendFile("/Users/BrandonTaft/Desktop/Project/Server/status-pic.png")
-    });
+    const date = new Date().getDay()
+        res.sendFile(__dirname + `/screenshots/status-pic${date}.png`) 
 });
 
 app.get('/api/googlejobs', (req, res) => {
-    google.getJobs().then(function(titles){
+    google.getJobs().then(function (titles) {
         res.json(titles)
     });
-    
+
 });
 
 app.get('/api/linkedinjobs', (req, res) => {
-    linkedIn.getLinkedInJobs().then(function(info){
+    linkedIn.getLinkedInJobs().then(function (info) {
         res.json(info)
     });
-    
+
 })
 
 app.get('/api/serpjobs', (req, res) => {
@@ -74,14 +76,14 @@ app.get('/api/serpjobs', (req, res) => {
         let myJobs = data.jobs_results
         myJobs.forEach((job) => {
             if (job.description.includes(string) || job.title.includes("No Experience Required"))
-                console.log("Name: ", job.company_name, ", Title: ", job.title )
+                console.log("Name: ", job.company_name, ", Title: ", job.title)
         })
         res.json(myJobs)
     };
 
-   search.json(params, callback);
-    
-    
+    search.json(params, callback);
+
+
 })
 
 

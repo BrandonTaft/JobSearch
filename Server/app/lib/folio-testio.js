@@ -1,16 +1,20 @@
 const puppeteer = require('puppeteer');
+const cron = require('node-cron');
 const url = "https://www.brandontaft.net";
-async function checkPortfolio() {
 
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(url);
+function start() {
+    cron.schedule("0 7 * * *",
+        async function checkPortfolio() {
 
-    //take screenshot of url, gives it a name, tells it to shoot the whole page
-   await page.screenshot({ path: "status-pic.png", fullPage: true })
-    
-    //close browser or itll sit there and keep running
-    await browser.close()
-    
-}
-module.exports.checkPortfolio = checkPortfolio
+            const date = new Date().getDay()
+            const browser = await puppeteer.launch();
+            const page = await browser.newPage();
+            await page.goto(url, { "waitUntil": "networkidle0" });
+            await page.screenshot({ path: `screenshots/status-pic${date}.png`, fullPage: true })
+            await browser.close()
+
+        }
+    );
+};
+
+module.exports = { start }

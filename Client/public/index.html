@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta
       name="description"
       content="Web site created using create-react-app"
@@ -27,7 +26,52 @@
     <title>React App</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div>
+      <div id="preloader">
+        
+        <div id="digimax-preloader" class="digimax-preloader">
+         
+            <div class="preloader-animation">
+             
+                <div class="spinner"></div>
+               
+                <div class="loader">
+                    <span data-text-preloader="D" class="animated-letters">D</span>
+                    <span data-text-preloader="I" class="animated-letters">I</span>
+                    <span data-text-preloader="G" class="animated-letters">G</span>
+                    <span data-text-preloader="I" class="animated-letters">I</span>
+                    <span data-text-preloader="M" class="animated-letters">M</span>
+                    <span data-text-preloader="A" class="animated-letters">A</span>
+                    <span data-text-preloader="X" class="animated-letters">X</span>
+                </div>
+                <p class="fw-5 text-center text-uppercase">Loading</p>
+            </div>
+           
+            <div class="loader-animation">
+                <div class="row h-100">
+                    
+                    <div class="col-3 single-loader p-0">
+                        <div class="loader-bg"></div>
+                    </div>
+                    
+                    <div class="col-3 single-loader p-0">
+                        <div class="loader-bg"></div>
+                    </div>
+                    
+                    <div class="col-3 single-loader p-0">
+                        <div class="loader-bg"></div>
+                    </div>
+                    
+                    <div class="col-3 single-loader p-0">
+                        <div class="loader-bg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="scrollUp" title="Scroll To Top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
     <div id="root"></div>
     <!--
       This HTML file is a template.
