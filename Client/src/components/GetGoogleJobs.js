@@ -7,7 +7,6 @@ function GetGoogleJobs() {
 
     useEffect(() => {
         const getGoogleJobs = () => {
-            //http.get('http://localhost:8001/api/googlejobs')
             JobsService.getAllGoogleJobs()
                 .then(response => {
                     setGoogleJobs(response.data)
@@ -27,7 +26,8 @@ function GetGoogleJobs() {
         </ul>
     })
     return (
-        <ul>{display}</ul>
+        
+        <div>{googleJobs}</div>
     )
 }
 

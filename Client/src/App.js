@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import "./css/responsive.css"
+import Loader from "./components/Loader"
 import GetGoogleJobs from "./components/GetGoogleJobs";
 import CheckPortfolio from "./components/CheckPortfolio";
 import PageNotFound from "./components/PageNotFound";
@@ -30,10 +31,11 @@ function App() {
           <Routes>
           <Route exact path="/google-jobs" element={<GetGoogleJobs/>}/>
           <Route exact path="/portfolio" element={<CheckPortfolio/>}/>
-          <Route path="/*" element={<PageNotFound/>}/>
+          {/* <Route path="/*" element={<PageNotFound/>}/> */}
           </Routes>
         </div>
       </div>
+     
     );
   }
 

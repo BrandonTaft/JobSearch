@@ -3,14 +3,15 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 const config = require('./app/config/db.config');
 const google = require('./app/lib/google');
 const linkedIn = require('./app/lib/linkedIn');
 const folio = require('./app/lib/folio-testio');
-const serp = require('./app/lib/serp')
-const form = require('./app/lib/form')
-
-
+const serp = require('./app/lib/serp');
+const form = require('./app/lib/form');
+const repository = require('./app/repositories/JobRepository')
+const Job = require('./app/models/Job')
 const app = express();
 
 require('dotenv').config();
@@ -21,19 +22,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '/')));
 
-const db = require('./app/models');
-db.mongoose.connect(db.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => {
-        console.log("Connected to database!");
-    })
-    .catch(err => {
-        console.log("Cannot connect to database!", err);
-        process.exit();
-    });
+// const db = require('./app/models');
+// db.mongoose.connect(db.url, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// })
+//     .then(() => {
+//         console.log("Connected to database!");
+//     })
+//     .catch(err => {
+//         console.log("Cannot connect to database!", err);
+//         process.exit();
+//     });
 
+//************* Create Database Connection ************//
+
+mongoose.connect(config.DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }).then(() => {
+            console.log("Connected to database!");
+        })
+        .catch(err => {
+            console.log("Cannot connect to database!", err);
+            process.exit();
+        });
+  
     
     
 folio.start()
@@ -44,11 +58,25 @@ app.get('/api/check-portfolio', (req, res) => {
 });
 
 app.get('/api/googlejobs', (req, res) => {
-    google.getJobs().then(function (titles) {
-        res.json(titles)
+    repository.findAll().then(function (jobs) {
+        res.json(jobs);
+    }).catch((error) => console.log(error));
     });
-
-});
+    // google.getJobs().then(function (titles) {
+    //     // res.json(titles)
+    //     for(i = 0; i < titles.length; i++){
+    //         const job = new Job({
+    //             title: titles[i]
+    //         })
+    //         job.save().then(function () {
+    //             //res.redirect('/');
+    //             console.log(job);
+    //         }).catch((error) => console.log(error));
+    //     }
+            
+    // })   
+    
+        
 
 app.get('/api/linkedinjobs', (req, res) => {
     linkedIn.getLinkedInJobs().then(function (info) {

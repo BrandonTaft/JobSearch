@@ -3,7 +3,7 @@ const cron = require('node-cron');
 const url = "https://www.brandontaft.net";
 
 function start() {
-    cron.schedule("0 7 * * *",
+    cron.schedule("0 0 0 * * *",
         async function checkPortfolio() {
 
             const date = new Date().getDay()
