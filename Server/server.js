@@ -59,6 +59,7 @@ app.get('/api/check-portfolio', (req, res) => {
 
 app.get('/api/googlejobs', (req, res) => {
     repository.findAll().then(function (jobs) {
+        console.log(jobs)
         res.json(jobs);
     }).catch((error) => console.log(error));
     });
