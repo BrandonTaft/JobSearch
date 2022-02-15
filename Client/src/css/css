@@ -1,4 +1,4 @@
-/*#ed462f
+/* /* #ed462f
 /* ******************************
 :: 1.0 WEB FONTS
 ****************************** */
@@ -2919,4 +2919,4 @@ body.dark,
 .rtl .bg-overlay::after,
 .rtl .grad-hover::before {
     background: linear-gradient(135deg, #E0040B 0%, #fc5130 100%);
-}
+} */

@@ -16,6 +16,7 @@ function CheckPortfolio() {
 
     return (
         <div>
+            hey
             <img src={`${serverBaseURI}/screenshots/status-pic${date}.png`} alt="Portfolio Screenshot" />
         </div>
     )

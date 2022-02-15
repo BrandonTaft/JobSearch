@@ -1,5 +1,7 @@
 import React from "react";
-import Button from "../components/Button"
+import Button from "../components/Button";
+
+
 
 function Home(){
 
@@ -7,6 +9,7 @@ function Home(){
         <div>
             <h1>Hello World</h1>
             <Button />
+            
         </div>
     )
 }
