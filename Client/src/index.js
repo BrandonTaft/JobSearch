@@ -1,17 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Routes } from "react-router-dom";
-import App from "./pages/App";
+import { BrowserRouter as Router} from "react-router-dom";
+import App from "./App";
 import Navbar from "./layouts/Navbar";
-//import * as serviceWorker from "./serviceWorker";
+import Home from "./pages/Home"
+
 
 ReactDOM.render(
-  <BrowserRouter>
+  <React.StrictMode>
+  <Router>
   <Navbar />
   <App />
-  </BrowserRouter>,
+  <Home />
+  </Router>
+  </React.StrictMode>,
   document.getElementById("root")
 );
-
-
-//serviceWorker.unregister();
