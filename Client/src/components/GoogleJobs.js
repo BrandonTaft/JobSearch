@@ -2,30 +2,31 @@ import JobsService from "../services/jobs-service";
 import { useState, useEffect } from 'react';
 import style from "../css/googleJobs.module.css";
 
-function GetGoogleJobs() {
+function GoogleJobs() {
 
-    // const [googleJobs, setGoogleJobs] = useState([])
+    const [googleJobs, setGoogleJobs] = useState([])
 
-    // useEffect(() => {
-    //     const getGoogleJobs = () => {
-    //         JobsService.getAllGoogleJobs()
-    //             .then(response => {
-    //                 setGoogleJobs(response.data)
-    //                 console.log(response.data);
-    //             })
-    //             .catch(e => {
-    //                 console.log(e);
-    //             });
-    //     }
+    useEffect(() => {
+        const getGoogleJobs = () => {
+            JobsService.getAllGoogleJobs()
+                .then(response => {
+                    setGoogleJobs(response.data)
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+        }
 
-    //     getGoogleJobs();
-    // }, [])
-    // const jobs = googleJobs
-    // const display = jobs.map((job, index) => {
-    //     return <ul key={index}>
-    //         <h3>{job}</h3>
-    //     </ul>
-    // })
+        getGoogleJobs();
+    }, [])
+    
+    const display = googleJobs.map(job => {
+        return <ul key={job._id}>
+            <h3>{job.title}</h3>
+            <a href={job.href} alt="Link">{job.href}</a>
+            <p>{job.description}</p>
+        </ul>
+    })
      return (
     //     // <section id="service" class="section service-area ptb_100 pt-md-0">
     //     // <div class="container">
@@ -41,8 +42,8 @@ function GetGoogleJobs() {
     //     // </div>
     //     // </div>
     //     // </section>
-       <div className={style.googleJobs}>Google Jobs</div> 
+       <div className={style.googleJobs}>{display}</div> 
      )
 }
 
-export default GetGoogleJobs;
+export default GoogleJobs;

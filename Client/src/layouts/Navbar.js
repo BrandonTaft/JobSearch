@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import pic from "../img/logo/logo.png";
-import Portfolio from "../components/CheckPortfolio";
+import Portfolio from "../components/Portfolio";
 import {
     Container,
     Navbar,

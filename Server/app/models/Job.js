@@ -6,6 +6,12 @@ const Schema = new mongoose.Schema({
   title: {
     type: String,
   },
+  href:{
+    type: String,
+  },
+  description:{
+    type: String
+  },
   done: {
     type: Boolean,
   },

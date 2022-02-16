@@ -1,8 +1,8 @@
 import JobsService from "../services/jobs-service";
 import { useState } from 'react';
-import style from "../css/checkPortfolio.module.css"
+import style from "../css/portfolio.module.css"
 
-function CheckPortfolio() {
+function Portfolio() {
     const serverBaseURI = 'http://localhost:8001';
     const d = new Date(); 
 	const date = new Date().getDay()
@@ -22,4 +22,4 @@ function CheckPortfolio() {
     )
 
 }
-export default CheckPortfolio;
+export default Portfolio;

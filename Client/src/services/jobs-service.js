@@ -6,7 +6,7 @@ class JobsService {
     return http.get("/googlejobs");
   }
   checkPortfolio() {
-    return http.get(`/check-portfolio`);
+    return http.get(`/portfolio`);
   }
   create(data) {
     return http.post("/", data);

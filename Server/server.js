@@ -5,9 +5,9 @@ const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const config = require('./app/config/db.config');
-const google = require('./app/lib/google');
+const getGoogleJobs = require('./app/lib/getGoogleJobs');
 const linkedIn = require('./app/lib/linkedIn');
-const folio = require('./app/lib/folio-testio');
+const checkPortfolio = require('./app/lib/checkPortfolio');
 const serp = require('./app/lib/serp');
 const form = require('./app/lib/form');
 const repository = require('./app/repositories/JobRepository')
@@ -50,33 +50,21 @@ mongoose.connect(config.DB, {
   
     
     
-folio.start()
+checkPortfolio.startPortfolio();
+getGoogleJobs.startGetGoogleJobs();
 
-app.get('/api/check-portfolio', (req, res) => {
+
+app.get('/api/portfolio', (req, res) => {
     const date = new Date().getDay()
         res.sendFile(__dirname + `/screenshots/status-pic${date}.png`) 
 });
 
 app.get('/api/googlejobs', (req, res) => {
     repository.findAll().then(function (jobs) {
-        console.log(jobs)
         res.json(jobs);
     }).catch((error) => console.log(error));
     });
-    // google.getJobs().then(function (titles) {
-    //     // res.json(titles)
-    //     for(i = 0; i < titles.length; i++){
-    //         const job = new Job({
-    //             title: titles[i]
-    //         })
-    //         job.save().then(function () {
-    //             //res.redirect('/');
-    //             console.log(job);
-    //         }).catch((error) => console.log(error));
-    //     }
-            
-    // })   
-    
+   
         
 
 app.get('/api/linkedinjobs', (req, res) => {
