@@ -1,5 +1,6 @@
 import JobsService from "../services/jobs-service";
 import { useState } from 'react';
+import style from "../css/checkPortfolio.module.css"
 
 function CheckPortfolio() {
     const serverBaseURI = 'http://localhost:8001';
@@ -15,8 +16,7 @@ function CheckPortfolio() {
         });
 
     return (
-        <div>
-            hey
+        <div className={style.screenshot}>
             <img src={`${serverBaseURI}/screenshots/status-pic${date}.png`} alt="Portfolio Screenshot" />
         </div>
     )

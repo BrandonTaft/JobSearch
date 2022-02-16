@@ -3,7 +3,7 @@ const cron = require('node-cron');
 const url = "https://www.brandontaft.net";
 
 function start() {
-    cron.schedule("0 0 0 * * *",
+    cron.schedule("* * 7 * *",
         async function checkPortfolio() {
 
             const date = new Date().getDay()
@@ -12,6 +12,7 @@ function start() {
             await page.goto(url, { "waitUntil": "networkidle0" });
             await page.screenshot({ path: `screenshots/status-pic${date}.png`, fullPage: true })
             await browser.close()
+            console.log("Screenshot Taken")
 
         }
     );

@@ -1,6 +1,6 @@
 import JobsService from "../services/jobs-service";
 import { useState, useEffect } from 'react';
-//import "../css/google.module.css";
+import style from "../css/googleJobs.module.css";
 
 function GetGoogleJobs() {
 
@@ -26,7 +26,7 @@ function GetGoogleJobs() {
     //         <h3>{job}</h3>
     //     </ul>
     // })
-    // return (
+     return (
     //     // <section id="service" class="section service-area ptb_100 pt-md-0">
     //     // <div class="container">
     //     // <div class="row">
@@ -41,8 +41,8 @@ function GetGoogleJobs() {
     //     // </div>
     //     // </div>
     //     // </section>
-    //    <div>hey</div> 
-    // )
+       <div className={style.googleJobs}>Google Jobs</div> 
+     )
 }
 
 export default GetGoogleJobs;
