@@ -103,6 +103,13 @@ app.get('/api/serpjobs', (req, res) => {
 
 })
 
+app.put('/api/:id', (req,res) => {
+    const { id } = req.params;
+    const job = { saved: true};
+    repository.updateById(id, job)
+        .then(res.status(200).json([]))
+        .catch((error) => console.log(error));
+})
 
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {

@@ -12,7 +12,8 @@ function googleJobs(titles,companies, locations, hrefs, descriptions) {
                     company: companies[i],
                     location: locations[i],
                     href: hrefs[i],
-                    description: descriptions[i]
+                    description: descriptions[i],
+                    saved: false
                 });
                 job.save().then(function () {
                     console.log(job);
@@ -22,7 +23,8 @@ function googleJobs(titles,companies, locations, hrefs, descriptions) {
     }
 }
 function startGetGoogleJobs() {
-    schedule.scheduleJob('0 7 * * *',
+     //Run At 7am Daily: '0 7 * * *' ,  Test: '37 * * * *' Runs on 37th Minute
+    schedule.scheduleJob('37 * * * *',
         async function getGoogleJobs() {
             const browser = await puppeteer.launch({
                 headless: false

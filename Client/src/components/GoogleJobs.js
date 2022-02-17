@@ -1,6 +1,8 @@
 import JobsService from "../services/jobs-service";
 import { useState, useEffect } from 'react';
 import style from "../css/googleJobs.module.css";
+import SaveButton from "./SaveButton";
+import jobsService from "../services/jobs-service";
 
 
 function GoogleJobs(props) {
@@ -10,6 +12,11 @@ function GoogleJobs(props) {
 
     function displayDescription(job){
         setjobDescription( job.description)
+    };
+
+    function saveJob(job){
+        const id = job._id;
+        jobsService.update(id, job)
     }
 
    
@@ -37,6 +44,8 @@ function GoogleJobs(props) {
                 <p>{job.company}</p>
                 <p>{job.location}</p>
                 <a href={job.href} alt="Link">Apply Here</a>
+                <button onClick={() => saveJob(job)}>Save Job</button>
+                
             </ul>
 
 

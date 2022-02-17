@@ -12,7 +12,7 @@ class JobsService {
     return http.post("/", data);
   }
   update(id, data) {
-    return http.put(`//${id}`, data);
+    return http.put(`/${id}`, data);
   }
   delete(id) {
     return http.delete(`//${id}`);

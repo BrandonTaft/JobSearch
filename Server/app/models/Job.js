@@ -18,7 +18,7 @@ const Schema = new mongoose.Schema({
   description:{
     type: String
   },
-  done: {
+  saved: {
     type: Boolean,
   },
   

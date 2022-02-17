@@ -39,7 +39,7 @@ class JobRepository {
     //find Reminder by id and update it
     updateById(id, object) {
       const query = { _id: id };
-      return console.log("this it",object.notification) , this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done, notification: object.notification } });
+      return console.log("Job Saved","ID: ",id) , this.model.findOneAndUpdate(query, { $set: { saved: true} });
     }
   
     //find Reminder by id and update priority
