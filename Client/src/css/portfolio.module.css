@@ -4,7 +4,8 @@
     width: 50%;
     height: 500px;
     overflow-y: auto;
-    margin-top: 2%;
+    margin-top: 1%;
+    border: solid;
    }
 
 .screenshot img{

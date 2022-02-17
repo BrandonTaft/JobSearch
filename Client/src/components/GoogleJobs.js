@@ -2,9 +2,17 @@ import JobsService from "../services/jobs-service";
 import { useState, useEffect } from 'react';
 import style from "../css/googleJobs.module.css";
 
-function GoogleJobs() {
 
-    const [googleJobs, setGoogleJobs] = useState([])
+function GoogleJobs(props) {
+
+    const [googleJobs, setGoogleJobs] = useState([]);
+    const [jobDescription, setjobDescription] = useState([]);
+
+    function displayDescription(job){
+        setjobDescription( job.description)
+    }
+
+   
 
     useEffect(() => {
         const getGoogleJobs = () => {
@@ -19,31 +27,34 @@ function GoogleJobs() {
 
         getGoogleJobs();
     }, [])
-    
-    const display = googleJobs.map(job => {
-        return <ul key={job._id}>
-            <h3>{job.title}</h3>
-            <a href={job.href} alt="Link">{job.href}</a>
-            <p>{job.description}</p>
-        </ul>
-    })
-     return (
-    //     // <section id="service" class="section service-area ptb_100 pt-md-0">
-    //     // <div class="container">
-    //     // <div class="row">
-    //     // <div class="col-12 col-md-6 col-lg-4">
-    //     //                 <div class="single-service p-4">
-    //     //                     <span class="flaticon-rocket-launch color-1 icon-bg-1"></span>
-    //     //                     <h3 class="my-3">Google Jobs</h3>
-    //     //                     <div>{display}</div>
-    //     //                     <a class="service-btn mt-3" href="#">Learn More</a>
-    //     //                 </div>
-    //     // </div>
-    //     // </div>
-    //     // </div>
-    //     // </section>
-       <div className={style.googleJobs}>{display}</div> 
-     )
+
+    const leftDisplay = googleJobs.map(job => {
+        return (
+
+            <ul className={style.jobs} key={job._id}>
+                <h5>{job.title}</h5>
+                <button onClick={() => displayDescription(job)}>description</button> 
+                <p>{job.company}</p>
+                <p>{job.location}</p>
+                <a href={job.href} alt="Link">Apply Here</a>
+            </ul>
+
+
+        )
+    });
+
+    return (
+
+        <div className={style.googleJobs}>
+            <div className={style.left}>
+                {leftDisplay}
+            </div>
+            <div className={style.right}>
+                {jobDescription}
+            </div>
+        </div>
+
+    )
 }
 
 export default GoogleJobs;

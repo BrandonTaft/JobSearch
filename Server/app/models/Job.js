@@ -6,6 +6,12 @@ const Schema = new mongoose.Schema({
   title: {
     type: String,
   },
+  company: {
+    type: String
+  },
+  location:{
+    type: String
+  },
   href:{
     type: String,
   },

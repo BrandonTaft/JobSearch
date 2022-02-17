@@ -1,4 +1,30 @@
 .googleJobs{
-    background-color: darkgrey;
+    display: flex;
     height: 50%;
+}
+
+.left{
+    position: relative;
+    width: 50%;
+    height: 500px;
+    overflow-y: auto;
+    margin-top: 1%;
+    margin-bottom: 5%;
+    border: solid;
+}
+
+.jobs{
+    border: solid;
+}
+
+.right{
+    position: relative;
+    width: 50%;
+    height: 500px;
+    overflow-y: auto;
+    background-color: blue;
+    margin-top: 1%;
+    margin-bottom: 5%;
+    border: solid;
+    color:wheat
 }

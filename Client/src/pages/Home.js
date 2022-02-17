@@ -4,12 +4,11 @@ import Navbar from "../layouts/Navbar";
 import Portfolio from "../components/Portfolio";
 import Profile from "../components/Profile";
 import GoogleJobs from "../components/GoogleJobs";
-import Button from "../components/Button";
 
 
 
 function Home() {
-   
+
     return (
         <div>
             <Navbar />
@@ -17,7 +16,14 @@ function Home() {
                 <Profile />
                 <Portfolio />
             </div>
-            <GoogleJobs />
+            <div>
+                <h1>Google Jobs</h1>
+                <GoogleJobs />
+            </div>
+            <div>
+                <h1>LinkedIn Jobs</h1>
+                <GoogleJobs />
+            </div>
         </div>
     )
 }

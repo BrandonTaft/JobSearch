@@ -3,12 +3,14 @@ const schedule = require('node-schedule');
 const Job = require('../models/Job');
 const url = 'https://www.google.com/search?q=software+developer+entry+level+jobs&oq=jobs&aqs=chrome.0.69i59j35i39j69i60j69i61j69i60j69i65l2j69i60.3120j0j7&sourceid=chrome&ie=UTF-8&ibp=htl;jobs&sa=X&ved=2ahUKEwiho8eg8e31AhXiJ0QIHacyADQQutcGKAF6BAgdEAc&sxsrf=APq-WBsSjwLqc69srREBSjLQ9bSuOoZ5DA:1644246961616#fpstate=tldetail&htivrt=jobs&htidocid=EaIjisjqEGsAAAAAAAAAAA%3D%3D';
 
-function googleJobs(titles, hrefs, descriptions) {
+function googleJobs(titles,companies, locations, hrefs, descriptions) {
     for (i = 0; i < titles.length; i++) {
         for (i = 0; i < hrefs.length; i++) {
             for (i = 0; i < descriptions.length; i++) {
                 const job = new Job({
                     title: titles[i],
+                    company: companies[i],
+                    location: locations[i],
                     href: hrefs[i],
                     description: descriptions[i]
                 });
@@ -20,7 +22,7 @@ function googleJobs(titles, hrefs, descriptions) {
     }
 }
 function startGetGoogleJobs() {
-    schedule.scheduleJob('0 13 * * *',
+    schedule.scheduleJob('0 7 * * *',
         async function getGoogleJobs() {
             const browser = await puppeteer.launch({
                 headless: false
@@ -35,6 +37,20 @@ function startGetGoogleJobs() {
                     (element) => element.textContent
                 )
             );
+
+            let companies = await page.evaluate((req, res) =>
+            Array.from(
+                document.querySelectorAll('.vNEEBe'),
+                (element) => element.textContent
+            )
+        );
+
+        let locations = await page.evaluate((req, res) =>
+            Array.from(
+                document.querySelectorAll('.Qk80Jf'),
+                (element) => element.textContent
+            )
+        );
 
             let descriptions = await page.evaluate(() =>
                 Array.from(
@@ -52,7 +68,7 @@ function startGetGoogleJobs() {
             );
 
             browser.close();
-            googleJobs(titles, hrefs, descriptions);
+            googleJobs(titles,companies, locations, hrefs, descriptions);
 
         }
     )};

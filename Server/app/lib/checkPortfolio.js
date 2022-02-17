@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const schedule = require('node-schedule');
 const url = "https://www.brandontaft.net";
 
-function startPortfolio() { schedule.scheduleJob('0 13 * * *', async function checkPortfolio() {
+function startPortfolio() { schedule.scheduleJob('0 7 * * *', async function checkPortfolio() {
 
                 const date = new Date().getDay()
                 const browser = await puppeteer.launch();
