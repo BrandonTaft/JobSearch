@@ -40,32 +40,34 @@ app.use('/', express.static(path.join(__dirname, '/')));
 mongoose.connect(config.DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  }).then(() => {
-            console.log("Connected to database!");
-        })
-        .catch(err => {
-            console.log("Cannot connect to database!", err);
-            process.exit();
-        });
-  
-    
-    
+}).then(() => {
+    console.log("Connected to database!");
+})
+    .catch(err => {
+        console.log("Cannot connect to database!", err);
+        process.exit();
+    });
+
+
+
 checkPortfolio.startPortfolio();
 getGoogleJobs.startGetGoogleJobs();
 
 
 app.get('/api/portfolio', (req, res) => {
     const date = new Date().getDay()
-        res.sendFile(__dirname + `/screenshots/status-pic${date}.png`) 
+    res.sendFile(__dirname + `/screenshots/status-pic${date}.png`)
 });
 
 app.get('/api/googlejobs', (req, res) => {
     repository.findAll().then(function (jobs) {
         res.json(jobs);
     }).catch((error) => console.log(error));
-    });
-   
-        
+});
+
+
+
+
 
 app.get('/api/linkedinjobs', (req, res) => {
     linkedIn.getLinkedInJobs().then(function (info) {
@@ -103,13 +105,19 @@ app.get('/api/serpjobs', (req, res) => {
 
 })
 
-app.put('/api/:id', (req,res) => {
+app.put('/api/:id', (req, res) => {
     const { id } = req.params;
-    const job = { saved: true};
+    const job = { saved: true };
     repository.updateById(id, job)
         .then(res.status(200).json([]))
         .catch((error) => console.log(error));
-})
+});
+
+app.get('/api/savedjobs', (req, res) => {
+    repository.findAll().then(function (jobs) {
+        res.json(jobs);
+    }).catch((error) => console.log(error));
+});
 
 const PORT = process.env.PORT || 8000
 app.listen(PORT, () => {

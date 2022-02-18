@@ -2,7 +2,7 @@ import React from "react";
 import style from "../css/home.module.css";
 import Navbar from "../layouts/Navbar";
 import Portfolio from "../components/Portfolio";
-import Profile from "../components/Profile";
+import SavedJobs from "../components/SavedJobs";
 import GoogleJobs from "../components/GoogleJobs";
 
 
@@ -13,7 +13,7 @@ function Home() {
         <div>
             <Navbar />
             <div className={style.home}>
-                <Profile />
+                <SavedJobs />
                 <Portfolio />
             </div>
             <div>

@@ -8,6 +8,9 @@ class JobsService {
   checkPortfolio() {
     return http.get(`/portfolio`);
   }
+  getSavedJobs() {
+    return http.get("/savedjobs");
+  }
   create(data) {
     return http.post("/", data);
   }

@@ -19,6 +19,10 @@ class JobRepository {
       return this.model.find();
     }
   
+    findSaved() {
+      const query = { saved: true};
+      return this.model.findAll({'saved': 'true'});
+    }
     
   
     //find Reminder by the id

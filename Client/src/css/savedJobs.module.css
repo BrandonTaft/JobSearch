@@ -1,0 +1,20 @@
+
+
+.profile{
+    width: 50%;
+    border: solid;
+    margin-top: 1%;
+}
+
+.savedJobs{
+    position: relative;
+    height: 500px;
+    overflow-y: auto;
+    margin-top: 1%;
+    margin-bottom: 5%;
+    border: solid;
+}
+
+.savedJobsList{
+    border: solid;
+}

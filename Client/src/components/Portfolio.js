@@ -17,6 +17,7 @@ function Portfolio() {
 
     return (
         <div className={style.screenshot}>
+             <h1>Portfolio</h1>
             <img src={`${serverBaseURI}/screenshots/status-pic${date}.png`} alt="Portfolio Screenshot" />
         </div>
     )

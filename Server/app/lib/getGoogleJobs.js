@@ -24,7 +24,7 @@ function googleJobs(titles,companies, locations, hrefs, descriptions) {
 }
 function startGetGoogleJobs() {
      //Run At 7am Daily: '0 7 * * *' ,  Test: '37 * * * *' Runs on 37th Minute
-    schedule.scheduleJob('37 * * * *',
+    schedule.scheduleJob('0 7 * * *',
         async function getGoogleJobs() {
             const browser = await puppeteer.launch({
                 headless: false

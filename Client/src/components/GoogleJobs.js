@@ -1,8 +1,7 @@
-import JobsService from "../services/jobs-service";
+import jobsService from "../services/jobs-service";
 import { useState, useEffect } from 'react';
 import style from "../css/googleJobs.module.css";
 import SaveButton from "./SaveButton";
-import jobsService from "../services/jobs-service";
 
 
 function GoogleJobs(props) {
@@ -23,7 +22,7 @@ function GoogleJobs(props) {
 
     useEffect(() => {
         const getGoogleJobs = () => {
-            JobsService.getAllGoogleJobs()
+            jobsService.getAllGoogleJobs()
                 .then(response => {
                     setGoogleJobs(response.data)
                 })
