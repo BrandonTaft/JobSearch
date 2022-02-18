@@ -6,7 +6,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const config = require('./app/config/db.config');
 const getGoogleJobs = require('./app/lib/getGoogleJobs');
-const linkedIn = require('./app/lib/linkedIn');
+const getLinkedInJobs = require('./app/lib/getLinkedInJobs');
 const checkPortfolio = require('./app/lib/checkPortfolio');
 const serp = require('./app/lib/serp');
 const form = require('./app/lib/form');
@@ -52,6 +52,7 @@ mongoose.connect(config.DB, {
 
 checkPortfolio.startPortfolio();
 getGoogleJobs.startGetGoogleJobs();
+getLinkedInJobs.startGetLinkedInJobs();
 
 
 app.get('/api/portfolio', (req, res) => {
@@ -60,13 +61,17 @@ app.get('/api/portfolio', (req, res) => {
 });
 
 app.get('/api/googlejobs', (req, res) => {
-    repository.findAll().then(function (jobs) {
+    repository.findAllGoogle().then(function (jobs) {
         res.json(jobs);
     }).catch((error) => console.log(error));
 });
 
 
-
+app.get('/api/linkedin-jobs', (req, res) => {
+    repository.findAllLinkedIn().then(function (jobs) {
+        res.json(jobs);
+    }).catch((error) => console.log(error));
+});
 
 
 app.get('/api/linkedinjobs', (req, res) => {
@@ -114,8 +119,17 @@ app.put('/api/:id', (req, res) => {
 });
 
 app.get('/api/savedjobs', (req, res) => {
-    repository.findAll().then(function (jobs) {
+    repository.findSaved().then(function (jobs) {
         res.json(jobs);
+    }).catch((error) => console.log(error));
+});
+
+app.delete('/api/:id', (req, res) => {
+    const { id } = req.params;
+    repository.deleteById(id).then((ok) => {
+        console.log(ok);
+        console.log(`Deleted record with id: ${id}`);
+        res.status(200).json([]);
     }).catch((error) => console.log(error));
 });
 

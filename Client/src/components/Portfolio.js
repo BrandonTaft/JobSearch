@@ -4,8 +4,7 @@ import style from "../css/portfolio.module.css"
 
 function Portfolio() {
     const serverBaseURI = 'http://localhost:8001';
-    const d = new Date(); 
-	const date = new Date().getDay()
+    const date = new Date().getDay()
     const [pic, setPic] = useState([])
     JobsService.checkPortfolio()
         .then(response => {
@@ -16,8 +15,7 @@ function Portfolio() {
         });
 
     return (
-        <div className={style.screenshot}>
-             <h1>Portfolio</h1>
+        <div className={style.screenshotContainer}>
             <img src={`${serverBaseURI}/screenshots/status-pic${date}.png`} alt="Portfolio Screenshot" />
         </div>
     )

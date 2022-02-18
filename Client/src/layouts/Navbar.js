@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import pic from "../img/logo/logo.png";
-import Portfolio from "../components/Portfolio";
+
 import {
     Container,
     Navbar,
@@ -21,7 +21,7 @@ const Navigation = () => {
 
             <Navbar bg="dark" variant="dark" expand="sm">
                 <Container>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand href="/">
                         <img
                             alt=""
                             src={pic}
@@ -34,8 +34,8 @@ const Navigation = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="/portfolio">Portfolio</Nav.Link>
-                            <Nav.Link href="#link">Link</Nav.Link>
+                            <Nav.Link href="/linkedin">Linked In</Nav.Link>
+                            <Nav.Link href="/google-jobs">Google Jobs</Nav.Link>
                             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

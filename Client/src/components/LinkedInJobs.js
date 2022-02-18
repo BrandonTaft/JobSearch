@@ -1,13 +1,13 @@
 import jobsService from "../services/jobs-service";
 import { useState, useEffect } from 'react';
-import style from "../css/googleJobs.module.css";
+import style from "../css/linkedInJobs.module.css";
 import Navbar from "../layouts/Navbar";
 import SaveButton from "./SaveButton";
 
 
-function GoogleJobs(props) {
+function LinkedInJobs(props) {
 
-    const [googleJobs, setGoogleJobs] = useState([]);
+    const [linkedInJobs, setLinkedInJobs] = useState([]);
     const [jobDescription, setjobDescription] = useState([]);
 
     function displayDescription(job){
@@ -22,20 +22,20 @@ function GoogleJobs(props) {
    
 
     useEffect(() => {
-        const getGoogleJobs = () => {
-            jobsService.getAllGoogleJobs()
+        const getLinkedInJobs = () => {
+            jobsService.getAllLinkedInJobs()
                 .then(response => {
-                    setGoogleJobs(response.data)
+                    setLinkedInJobs(response.data)
                 })
                 .catch(e => {
                     console.log(e);
                 });
         }
 
-        getGoogleJobs();
+        getLinkedInJobs();
     }, [])
 
-    const leftDisplay = googleJobs.map(job => {
+    const leftDisplay = linkedInJobs.map(job => {
         return (
 
             <ul className={style.jobs} key={job._id}>
@@ -55,7 +55,7 @@ function GoogleJobs(props) {
     return (
         <section>
         <Navbar />
-        <div className={style.googleJobs}>
+        <div className={style.linkedInJobs}>
             <div className={style.left}>
                 {leftDisplay}
             </div>
@@ -68,4 +68,4 @@ function GoogleJobs(props) {
     )
 }
 
-export default GoogleJobs;
+export default LinkedInJobs;

@@ -5,6 +5,16 @@ import jobsService from "../services/jobs-service";
 function SavedJobs(){
 
     const [savedJobs, setSavedJobs] = useState([]);
+    const [jobDescription, setjobDescription] = useState([]);
+
+    function displayDescription(job){
+        setjobDescription( job.description)
+    };
+
+    function deleteJob(job){
+        const id = job._id;
+        jobsService.delete(id, job)
+    }
 
     useEffect(() => {
         const getSaved = () => {
@@ -18,7 +28,7 @@ function SavedJobs(){
         }
 
         getSaved();
-    }, []);
+    }, [savedJobs]);
 
     const savedJobsDisplay = savedJobs.map(job => {
         return (
@@ -29,15 +39,23 @@ function SavedJobs(){
                 <p>{job.company}</p>
                 <p>{job.location}</p>
                 <a href={job.href} alt="Link">Apply Here</a>
+                <button onClick={() => deleteJob(job)}>Delete</button> 
                 
             </ul>
             )
         });
 
+
     return(
-        <div className={style.profile}>
-            <h1>Saved Jobs</h1>
-            <div className={style.savedJobs}>{savedJobsDisplay}</div>
+        <div className={style.savedContainer}>
+            
+            <div className={style.savedJobsLeft}>
+                {savedJobsDisplay}
+            </div>
+        
+            <div className={style.savedJobsRight}>
+                 {jobDescription}
+            </div>
         </div>
     )
 }

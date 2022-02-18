@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 
 // Create collection of Jobs
 const Schema = new mongoose.Schema({
+  service:{
+    type: String
+  },
   title: {
     type: String,
   },

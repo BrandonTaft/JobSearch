@@ -4,6 +4,7 @@ import Navbar from "../layouts/Navbar";
 import Portfolio from "../components/Portfolio";
 import SavedJobs from "../components/SavedJobs";
 import GoogleJobs from "../components/GoogleJobs";
+import LinkedInJobs from "../components/LinkedInJobs";
 
 
 
@@ -12,9 +13,11 @@ function Home() {
     return (
         <div>
             <Navbar />
-            <div className={style.home}>
-                <SavedJobs />
+            <div>
                 <Portfolio />
+            </div>
+            <div>
+                <SavedJobs />
             </div>
             <div>
                 <h1>Google Jobs</h1>
@@ -22,7 +25,7 @@ function Home() {
             </div>
             <div>
                 <h1>LinkedIn Jobs</h1>
-                <GoogleJobs />
+                <LinkedInJobs />
             </div>
         </div>
     )
