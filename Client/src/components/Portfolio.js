@@ -1,6 +1,7 @@
 import JobsService from "../services/jobs-service";
 import { useState } from 'react';
-import style from "../css/portfolio.module.css"
+import style from "../css/portfolio.module.css";
+import Navbar from "../layouts/Navbar";
 
 function Portfolio() {
     const serverBaseURI = 'http://localhost:8001';
@@ -16,6 +17,7 @@ function Portfolio() {
 
     return (
         <div className={style.screenshotContainer}>
+            <Navbar />
             <img src={`${serverBaseURI}/screenshots/status-pic${date}.png`} alt="Portfolio Screenshot" />
         </div>
     )

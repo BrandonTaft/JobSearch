@@ -6,7 +6,7 @@
 .left{
     position: relative;
     width: 50%;
-    height: 500px;
+    max-height: 500px;
     overflow-y: auto;
     margin-top: 1%;
     margin-bottom: 5%;
@@ -19,6 +19,7 @@
 
 .right{
     position: relative;
+    max-height: 500px;
     width: 50%;
     overflow-y: auto;
     background-color: blue;
