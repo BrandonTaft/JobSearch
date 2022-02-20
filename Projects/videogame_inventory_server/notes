@@ -1,0 +1,117 @@
+client.connect(function (err) {
+    if (err) {
+        return console.error('could not connect to postgres', err);
+    }
+    //client.query('SELECT NOW() AS "theTime"', function(err, result) {
+    client.query('INSERT INTO  Games(title, genre) VALUES($1, $2)', [title, 'please']), function (err, result) {
+        if (err) {
+            return console.error('error running query', err);
+        }
+        console.log(result.rows);
+        // >> output: 2018-08-23T14:02:57.117Z
+        client.end();
+    };
+});
+client.connect(function(err) {
+    if(err) {
+      return console.error('could not connect to postgres', err);
+    }
+    client.query('SELECT NOW() AS "theTime"', function(err, result) {
+      if(err) {
+        return console.error('error running query', err);
+      }
+      console.log(result.rows[0].theTime);
+      // >> output: 2018-08-23T14:02:57.117Z
+      client.end();
+    })
+  });
+  client.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+    var sql = "INSERT INTO  Games(title, genre) VALUES ('testgame', 'horror')";
+    client.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+    });
+  });
+
+
+
+
+
+
+  3333333333
+
+  const pgp = require('pg-promise')() 
+
+  var db = pgp(conString);
+
+  db.none(`INSERT INTO Games(title) VALUES(title)`//.then(() => {
+        //res.redirect('/')
+//})
+
+
+
+app.post('/api/videogames',(req,res) => {
+    const title = req.body.title
+    const gameID = req.body.gameID
+
+    db.none(`INSERT INTO Games(title) VALUES(title)`
+    //.then(() => {
+      //  res.redirect('/')
+)
+})
+var conString = "postgres://asbapbzq:MIashZPrGd-YgV7ljodcaT4vBmLwqa-S@chunee.db.elephantsql.com/asbapbzq"
+
+// app.post('/api/login', async (req, res) => {
+
+//     const username = req.body.username
+//     const password = req.body.password
+
+//     let user = await models.User.findOne({
+//         where: {
+//             username: username
+//         }
+//     })
+
+//     if (user != null) {
+//         bcrypt.compare(password, user.password, (error, result) => {
+//             if (result) {
+//                 const token = jwt.sign({ username: user.name }, 'SECRET KEY')
+//                 res.json({ success: true, token: token })
+//             }
+//             else {
+//                 res.json({ success: false, message: 'Not Authenticated' })
+//             }
+//         })
+//                 //                 res.json({ success: true })
+//                 //             } else {
+//                 //                 res.json({ message: "WRONG PASSWORD!" })
+
+//                 //                 .0
+
+//                 //             }
+//                 //         })
+//                 //     } else {
+//                 //         res.json({ message: "Try Again!!!" })
+//                 //     }
+
+//                 // })
+
+//const users = [
+//{username: 'jon doe', password: 'password'}
+//  ] 
+//((User) => user.username == username && user.password == password)
+//if user is not undefined it will generate web token
+// if (user != null) {
+//     bcrypt.compare(password, user.password, (error, result) => {
+//         if (result) {
+//             const token = jwt.sign({ username: user.name }, 'SECRET KEY')
+//             res.json({ success: true, token: token })
+//         }
+//     })
+// else {
+//     res.json({ success: false, message: 'Not Authenticated' })
+
+// }
+//}
