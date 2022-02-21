@@ -15,7 +15,7 @@
     "express": "^4.17.2",
     "express-session": "^1.17.2",
     "google-search-results-nodejs": "^2.1.0",
-    "googleapis": "^92.0.0",
+    "googleapis": "^39.2.0",
     "mongoose": "^6.1.8",
     "node-cron": "^3.0.0",
     "node-fetch": "^3.2.0",

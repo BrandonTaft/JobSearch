@@ -11,9 +11,10 @@ import LinkedInJobs from "../components/LinkedInJobs";
 function Home() {
 
     return (
-        <div>
+        <div className={style.home}>
             <Navbar />
             <div>
+                <h1>Profile</h1>
                 <Portfolio />
             </div>
             <div>

@@ -54,7 +54,6 @@ function GoogleJobs(props) {
 
     return (
         <section>
-        <Navbar />
         <div className={style.googleJobs}>
             <div className={style.left}>
                 {leftDisplay}

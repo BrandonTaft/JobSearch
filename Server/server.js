@@ -8,6 +8,7 @@ const config = require('./app/config/db.config');
 const getGoogleJobs = require('./app/lib/getGoogleJobs');
 const getLinkedInJobs = require('./app/lib/getLinkedInJobs');
 const checkPortfolio = require('./app/lib/checkPortfolio');
+const getGmail = require('./app/lib/getGmail')
 const serp = require('./app/lib/serp');
 const form = require('./app/lib/form');
 const repository = require('./app/repositories/JobRepository')
@@ -53,7 +54,7 @@ mongoose.connect(config.DB, {
 checkPortfolio.startPortfolio();
 getGoogleJobs.startGetGoogleJobs();
 getLinkedInJobs.startGetLinkedInJobs();
-
+getGmail.getGmail()
 
 app.get('/api/portfolio', (req, res) => {
     const date = new Date().getDay()

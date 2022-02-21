@@ -17,7 +17,7 @@ function Portfolio() {
 
     return (
         <div className={style.screenshotContainer}>
-            <iframe src={`${serverBaseURI}/screenshots/status-pic${date}.png`} name="iframe_a"  title="Portfolio" ></iframe>
+            <iframe src="https://brandontaft.net" name="iframe_a"  title="Portfolio" ></iframe>
 
             {/* <p><a href="https://brandontaft.net" target="iframe_a">View Live</a></p> */}
             {/* <iframe src={`${serverBaseURI}/screenshots/status-pic${date}.png`} name="port-iframe" alt="Portfolio Screenshot" title="Portfolio Screenshot" ></iframe>            */}

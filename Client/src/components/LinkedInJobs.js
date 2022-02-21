@@ -54,7 +54,6 @@ function LinkedInJobs(props) {
 
     return (
         <section>
-        <Navbar />
         <div className={style.linkedInJobs}>
             <div className={style.left}>
                 {leftDisplay}
