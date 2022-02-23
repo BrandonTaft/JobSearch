@@ -15,7 +15,7 @@ const TOKEN_PATH = 'token.json';
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Gmail API.
-  authorize(JSON.parse(content), listLabels);
+  authorize(JSON.parse(content), listMessages);
 });
 
 /**
@@ -73,22 +73,24 @@ function getNewToken(oAuth2Client, callback) {
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function listLabels(auth) {
+function listMessages(auth) {
   const gmail = google.gmail({version: 'v1', auth});
-  gmail.users.labels.list({
+  gmail.users.messages.list({
     userId: 'me',
+    
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
-    const labels = res.data.labels;
-    if (labels.length) {
-      console.log('Labels:');
-      labels.forEach((label) => {
-        console.log(`- ${label.name}`);
+    const messages = res.data.messages;
+    if (messages.length) {
+      console.log('Messages:');
+      messages.forEach((message) => {
+        let id = message.id;
+        console.log(id);
       });
     } else {
-      console.log('No labels found.');
+      console.log('No messages found.');
     }
-  });
+  }).then(getMessageData())
 }
 }
 module.exports = { getGmail };
