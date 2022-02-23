@@ -18,6 +18,7 @@ function Home() {
                 <Portfolio />
             </div>
             <div>
+                <h1>Saved Jobs</h1>
                 <SavedJobs />
             </div>
             <div>

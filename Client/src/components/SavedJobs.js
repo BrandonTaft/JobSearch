@@ -35,7 +35,7 @@ function SavedJobs(){
 
             <ul className={style.savedJobsList} key={job._id}>
                 <h5>{job.title}</h5>
-                {/* <button onClick={() => displayDescription(job)}>description</button>  */}
+                <button onClick={() => displayDescription(job)}>description</button>
                 <p>{job.company}</p>
                 <p>{job.location}</p>
                 <a href={job.href} alt="Link">Apply Here</a>

@@ -22,7 +22,7 @@ function linkedInJobs(titles, companies, locations, hrefs) {
 
 
 function startGetLinkedInJobs() {
-    //Run At 7am Daily: '0 7 * * *' ,  Test: '37 * * * *' Runs on 37th Minute
+    //Run At 730am Daily: '30 7 * * *' ,  Test: '37 * * * *' Runs on 37th Minute
     schedule.scheduleJob('30 7 * * *',
         async function getLinkedInJobs() {
             const browser = await puppeteer.launch({

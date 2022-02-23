@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
@@ -14,6 +15,7 @@ const form = require('./app/lib/form');
 const repository = require('./app/repositories/JobRepository')
 const Job = require('./app/models/Job')
 const app = express();
+const url = `https://www.googleapis.com/gmail/v1/users/somebody%40gmail.com/messages/1534c30da00b36af?key=${process.env.GMAIL_API_KEY}`;
 
 require('dotenv').config();
 
@@ -50,11 +52,24 @@ mongoose.connect(config.DB, {
     });
 
 
-
 checkPortfolio.startPortfolio();
 getGoogleJobs.startGetGoogleJobs();
 getLinkedInJobs.startGetLinkedInJobs();
-getGmail.getGmail()
+
+    
+app.get('/api/gmail', (req, res) => {
+    //var mail;
+   getGmail.getGmail(messages => {
+     var mail = messages
+      //console.log('EMAIL:'+mail)
+      cb(mail)
+   })
+
+
+cb(mail =>{
+    console.log(mail)
+})
+});
 
 app.get('/api/portfolio', (req, res) => {
     const date = new Date().getDay()

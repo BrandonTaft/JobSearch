@@ -1,9 +1,10 @@
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
+const url = 'https://www.googleapis.com/gmail/v1/users/somebody%40gmail.com/messages/1534c30da00b36af?key=AIzaSyAY1v1c-RJslROtWK7UXxbEMXlgyee8j9w';
 require('dotenv').config();
 
-function getGmail(){
+function getGmail(resp){
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 // The file token.json stores the user's access and refresh tokens, and is
@@ -15,7 +16,7 @@ const TOKEN_PATH = 'token.json';
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Gmail API.
-  authorize(JSON.parse(content), listMessages);
+  authorize(JSON.parse(content), getMessageId);
 });
 
 /**
@@ -69,14 +70,15 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 /**
- * Lists the labels in the user's account.
+ * Lists the message id's in the user's account.
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function listMessages(auth) {
+function getMessageId(auth,id) {
   const gmail = google.gmail({version: 'v1', auth});
   gmail.users.messages.list({
     userId: 'me',
+    labelIds: 'INBOX'
     
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
@@ -85,12 +87,27 @@ function listMessages(auth) {
       console.log('Messages:');
       messages.forEach((message) => {
         let id = message.id;
-        console.log(id);
-      });
+        getMessages(auth,id)
+      })
     } else {
       console.log('No messages found.');
     }
-  }).then(getMessageData())
+  })
+}
+
+function getMessages(auth,id) {
+  const gmail = google.gmail({version: 'v1', auth});
+  gmail.users.messages.get({
+    userId: 'me',
+    id:id,
+    format:'raw'
+    
+  }, (err, res) => {
+    if (err) return console.log('The API returned an error: ' + err);
+    const messages = res.data.snippet
+     resp(messages)
+    
+  })
 }
 }
 module.exports = { getGmail };
