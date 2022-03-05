@@ -56,19 +56,11 @@ checkPortfolio.startPortfolio();
 getGoogleJobs.startGetGoogleJobs();
 getLinkedInJobs.startGetLinkedInJobs();
 
-    
+//getGmail.getGmail()
 app.get('/api/gmail', (req, res) => {
-    //var mail;
-   getGmail.getGmail(messages => {
-     var mail = messages
-      //console.log('EMAIL:'+mail)
-      cb(mail)
-   })
-
-
-cb(mail =>{
-    console.log(mail)
-})
+   getGmail.getGmail()
+   
+   
 });
 
 app.get('/api/portfolio', (req, res) => {

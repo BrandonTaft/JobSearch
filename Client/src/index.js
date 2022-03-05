@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import history from "./History";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import Portfolio from "./components/Portfolio";
 import GoogleJobs from "./components/GoogleJobs";
 import LinkedInJobs from "./components/LinkedInJobs";
@@ -14,6 +15,7 @@ ReactDOM.render(
     <Router history={history}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/google" element={<GoogleJobs />} />
         <Route path="/linkedin" element={<LinkedInJobs />} />
         <Route path="/portfolio" element={<Portfolio />} />

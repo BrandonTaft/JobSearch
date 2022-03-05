@@ -4,8 +4,9 @@ const {google} = require('googleapis');
 const url = 'https://www.googleapis.com/gmail/v1/users/somebody%40gmail.com/messages/1534c30da00b36af?key=AIzaSyAY1v1c-RJslROtWK7UXxbEMXlgyee8j9w';
 require('dotenv').config();
 
-function getGmail(resp){
-// If modifying these scopes, delete token.json.
+function getGmail(cb){
+  
+// If modifying these scq,resopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
@@ -74,7 +75,7 @@ function getNewToken(oAuth2Client, callback) {
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function getMessageId(auth,id) {
+function getMessageId(auth) {
   const gmail = google.gmail({version: 'v1', auth});
   gmail.users.messages.list({
     userId: 'me',
@@ -83,8 +84,8 @@ function getMessageId(auth,id) {
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const messages = res.data.messages;
+
     if (messages.length) {
-      console.log('Messages:');
       messages.forEach((message) => {
         let id = message.id;
         getMessages(auth,id)
@@ -96,6 +97,7 @@ function getMessageId(auth,id) {
 }
 
 function getMessages(auth,id) {
+  var messages;
   const gmail = google.gmail({version: 'v1', auth});
   gmail.users.messages.get({
     userId: 'me',
@@ -104,10 +106,19 @@ function getMessages(auth,id) {
     
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
-    const messages = res.data.snippet
-     resp(messages)
+   
+    console.log(res.data.snippet)
+   sendMail(res.data.snippet)
+   
     
   })
+  
 }
+// function cb(req,res){
+// console.log(messages)
+// res.json(messages)
+//}
+
 }
+
 module.exports = { getGmail };
