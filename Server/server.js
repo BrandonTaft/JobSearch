@@ -9,13 +9,12 @@ const config = require('./app/config/db.config');
 const getGoogleJobs = require('./app/lib/getGoogleJobs');
 const getLinkedInJobs = require('./app/lib/getLinkedInJobs');
 const checkPortfolio = require('./app/lib/checkPortfolio');
-const getGmail = require('./app/lib/getGmail')
+
 const serp = require('./app/lib/serp');
 const form = require('./app/lib/form');
 const repository = require('./app/repositories/JobRepository')
 const Job = require('./app/models/Job')
 const app = express();
-const url = `https://www.googleapis.com/gmail/v1/users/somebody%40gmail.com/messages/1534c30da00b36af?key=${process.env.GMAIL_API_KEY}`;
 
 require('dotenv').config();
 
@@ -56,13 +55,7 @@ checkPortfolio.startPortfolio();
 getGoogleJobs.startGetGoogleJobs();
 getLinkedInJobs.startGetLinkedInJobs();
 
-//getGmail.getGmail()
-app.get('/api/gmail', (req, res) => {
-   getGmail.getGmail()
-   
-   
-});
-
+ 
 app.get('/api/portfolio', (req, res) => {
     const date = new Date().getDay()
     res.sendFile(__dirname + `/screenshots/status-pic${date}.png`)
