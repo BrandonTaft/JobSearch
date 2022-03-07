@@ -11,8 +11,12 @@ import LinkedInJobs from "../components/LinkedInJobs";
 function Home() {
 
     return (
+        
         <div className={style.home}>
             <Navbar />
+            <a href="http://127.0.0.1:8001/auth/google">
+                    hey
+                </a>
             <div>
                 <h1>Profile</h1>
                 <Portfolio />
