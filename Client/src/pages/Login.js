@@ -77,7 +77,9 @@ function Login() {
         {!isLoggedIn &&
           <div id="google-signin"></div>
         }
-        
+         <a href="http://127.0.0.1:8001/auth/google">
+                    hey
+                </a>
         {isLoggedIn &&
           <div>
             <div>

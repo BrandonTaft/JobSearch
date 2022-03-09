@@ -8,17 +8,18 @@ import Portfolio from "./components/Portfolio";
 import GoogleJobs from "./components/GoogleJobs";
 import LinkedInJobs from "./components/LinkedInJobs";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import Navbar from "./layouts/Navbar";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router history={history}>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/google" element={<GoogleJobs />} />
         <Route path="/linkedin" element={<LinkedInJobs />} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/navbar" element={<Navbar />} />
       </Routes>
     </Router>
   </React.StrictMode>,
