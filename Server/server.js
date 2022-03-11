@@ -18,7 +18,7 @@ const Job = require('./app/models/Job')
 const app = express();
 var passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-
+const {google} = require('googleapis');
 
 require('dotenv').config();
 
@@ -63,7 +63,7 @@ mongoose.connect(config.DB, {
 checkPortfolio.startPortfolio();
 getGoogleJobs.startGetGoogleJobs();
 getLinkedInJobs.startGetLinkedInJobs();
-getGmail.getGmail()
+//getGmail.getGmail()
 
 // app.get('/api/gmail', (req,res) => {
 //     const gmail = google.gmail({version: 'v1', auth});
@@ -102,17 +102,17 @@ passport.deserializeUser(function (id, done) {
 
 app.get(
     "/auth/google",
-    //passport.authenticate("google", { scope: ["profile"] })
-    passport.authenticate("google", { scope: ['https://www.googleapis.com/auth/gmail.readonly'] })
+    passport.authenticate("google", { scope: ["profile",'https://www.googleapis.com/auth/gmail.readonly'] })
+    //passport.authenticate("google", { scope: ['https://www.googleapis.com/auth/gmail.readonly'] })
 );
 app.get(
     "/auth/google/callback",
     passport.authenticate("google", {
-        failureRedirect: "http://127.0.0.1:3000/login"
+        failureRedirect: "http://127.0.0.1:3000/"
     }),
     function (req, res) {
-
-        res.redirect("http://127.0.0.1:3000");
+       
+        res.redirect("http://127.0.0.1:3000/home");
     }
 );
 passport.use(
@@ -122,12 +122,14 @@ passport.use(
             clientSecret: "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",
             callbackURL: "http://127.0.0.1:8001/auth/google/callback"
         },
-        function (accessToken, refreshToken, done) {
-            console.log(accessToken)
-        }
-
-
-    ))
+        function (accessToken, refreshToken, profile,done) {
+            return done(null, profile,
+            console.log(JSON.stringify(profile), 'AccessToken:', accessToken, 'Refresh Token:', refreshToken))
+            }
+            ))
+        
+    
+    
 
 app.get('/api/portfolio', (req, res) => {
     const date = new Date().getDay()

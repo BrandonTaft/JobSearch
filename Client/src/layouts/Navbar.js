@@ -87,7 +87,7 @@ function Navbar() {
 </div> */},
 
         <div className="wrapper active">
-            <header className="main-header">
+            
                 <nav>
                     <div className="masthead active">
 
@@ -110,7 +110,7 @@ function Navbar() {
                         </ul>
                     </div>
                 </nav>
-            </header>
+           
 
         </div>
 
