@@ -1,26 +1,24 @@
-
-#bama{
-    color: crimson;
+*{
+    padding: 0; border: 0; margin: 0; 
+    box-sizing: border-box;
+    list-style-type: none; /* Styled in normalize.css */
+    text-decoration: none;
+    color: silver;
 }
+
 
 body{
-    background-color: crimson;
+    margin: 0;
+    height: 200vh;
 }
 
-.wrapper{
-    display: flex;
-    flex-direction: column;
-    height: 10vh;
-    margin: 0 auto;
-    max-width: 1550px;
-    padding-top: .5rem;
-    width: 93%;
-
-}
-
-.main-header a{
-    letter-spacing: .18rem;
-    text-transform: uppercase;
+.nav-bar{
+    display:flex ;
+    position: absolute;
+    background-color: blue;
+    width: 100%;
+    height: 14%;
+    z-index: 1;
 }
 
 .masthead{
@@ -36,17 +34,16 @@ body{
     justify-content: space-between;
 }
 
-.masthead h1{
-    transition-delay: 450ms;
-}
-
-.menu-toggle{
+.hamburger-bun{
+    position: fixed;
     cursor: pointer;
     width: 55px;
     z-index: 3;
+    
+
 }
 
-.menu-toggle div{
+.hamburger-bun div{
     background-color: #ccc;
     border-radius: 25px;
     box-shadow: 0px 3px 13px rgba(0,0,0,.3);
@@ -55,55 +52,72 @@ body{
     transition-timing-function: cubic-bezier(.13,.24,.35,1.64);
 }
 
-.menu-toggle .one,
-.menu-toggle .two{
+.hamburger-bun .one,
+.hamburger-bun .two{
     margin-bottom: 7px;
 }
 
-.main-contents{
-    flex: auto;
+ .hamburger-bun .one{
+    box-shadow: 0px 3px 13px rgba(0,0,0,.4);
+    transform: translate(0, 14px) rotate(45deg);
 }
 
-.main-contents h2{
-    letter-spacing: 1.5px;
-    margin-bottom: .6rem;
-    text-transform: uppercase;
+.hamburger-bun .two{
+    background-color: transparent;
+    box-shadow: none;
+    transform: translateX(-55px);
 }
 
-.main-contents p{
-    font-size: 1.1rem;
-    letter-spacing: 1.7px;
-    line-height: 1.35;
-         color: #ccc;
-         transition-delay: 150ms;
-         transition-duration: 850ms;
+.hamburger-bun .three{
+    box-shadow: 0px 3px 13px rgba(0,0,0,.4);
+    transform: translate(0,-14px) rotate(-45deg);
+}
+
+.hamburger-bun.active{
+    position: fixed;
+    cursor: pointer;
+    width: 55px;
+    z-index: 3;
+   
+}
+
+.hamburger-bun.active div{
+    background-color: #ccc;
+    border-radius: 25px;
+    box-shadow: 0px 3px 13px rgba(0,0,0,.3);
+    height: 7px;
+    
 }
 
 
-
-
-
-
-/************* Style and animate the nav overlay ***********************/
-.main-nav-list::before,
-.main-nav-list::after{
-    background-color:silver;
-    content:"";
-    position: absolute;
-    top: 0;
-    height: 10vh;
-    width: 0vw;
-    transition: all 100ms ease-in-out 300ms;
+.hamburger-bun.active .one,
+.hamburger-bun.active .two{
+    margin-bottom: 7px;
 }
 
-.main-nav-list::before{
-    left: 0;
-}
-.main-nav-list::after{
-    right: 0;
+
+ .hamburger-bun.active .one{
+    box-shadow: 0px 3px 13px rgba(0,0,0,.4);
+    transform: translate(0, 0px);
 }
 
-.main-nav-list ul{
+.hamburger-bun.active .two{
+    background-color: #ccc;
+    border-radius: 25px;
+    box-shadow: 0px 3px 13px rgba(0,0,0,.3);
+    height: 7px;
+    transform: translate(0, 0px);
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(.13,.24,.35,1.64);
+}
+
+ .hamburger-bun.active .three{
+    box-shadow: 0px 3px 13px rgba(0,0,0,.4);
+    transform: translate(0, 0px);
+}
+
+
+.main-nav-list.active ul{
     position: absolute;
     top: -30%;
     left: 50%;
@@ -111,71 +125,30 @@ body{
     transition-duration: 300ms;
     transition-timing-function: ease-in-out;
     z-index: 2000;
-    list-style-type: none; /* Styled in normalize.css */
+}
+
+.main-nav-list ul{
+    position: fixed;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%,50%);
+   
+    transition-duration: 840ms;
+    transition-timing-function: cubic-bezier(.1, .2, .3, 1.4);
 }
 
 .main-nav-list a{
     display: block;
-    font-size: 1rem;
+    font-size: 2rem;
     letter-spacing: 3px;
-    margin-bottom: 10px;
-    opacity: 0;
+    margin-bottom: 15px;
+    opacity: 1;
     text-align: center;
     text-transform: uppercase;
-    text-decoration: none;
-    transition-delay: 130ms;
+    transition-delay: 100ms;
 }
-
-.main-nav-list .mobile-hide{/** Hide the link when viewing site on mobile devices. **/
-    display: none;
-}
-
-/************* Style the nav elements when active. ***********************/
-.masthead.active h1{
-    text-shadow: 0px 3px 3px rgba(0,0,0,.4);
-}
-
-.menu-toggle.active .one{
-    box-shadow: 0px 3px 13px rgba(0,0,0,.4);
-    transform: translate(0, 14px) rotate(45deg);
-}
-
-.menu-toggle.active .two{
-    background-color: transparent;
-    box-shadow: none;
-    transform: translateX(-55px);
-}
-
-.menu-toggle.active .three{
-    box-shadow: 0px 3px 13px rgba(0,0,0,.4);
-    transform: translate(0,-14px) rotate(-45deg);
-}
-
-.main-nav-list.active::before,
-.main-nav-list.active::after{
-    width: 25vw;
-/*     transition-duration: 1000ms; */
-}
-.main-nav-list.active ul{
-    top:10%;
-    transform: translate(-50%,-50%);
-    transition-delay: 560ms;
-    transition-duration: 240ms;
-    transition-timing-function: cubic-bezier(.1, .2, .3, 1.4);
-    padding-left: 0%;
-}
-
 .main-nav-list.active a{
-    transition-delay: 600ms;
-    opacity: 1;
-}
-
-
-/*** Just getting silly now ***************************/
-.wrapper.active p{
-    display: none;
-     color: rgb(50, 101, 134);
-               transition-delay: 150ms;
-     transition-duration: 350ms;
+    transition-delay: 00ms;
+    opacity: 0;
 }
 

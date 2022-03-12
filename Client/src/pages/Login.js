@@ -1,5 +1,6 @@
 import style from "../css/login.module.css";
 import { useEffect, useState } from 'react';
+import googleLogo from '../img/google.png';
 import { loadGoogleScript } from '../middleware/GoogleLogIn';
 const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -73,13 +74,16 @@ function Login() {
   return (
     <div className="App">
       <header className="App-header">
-        
+      <div >
+                <a href="http://127.0.0.1:8001/auth/google">
+                    <img id="icon" src={googleLogo} alt="Login With Google" ></img>
+                </a>
+                </div>        
+                
         {!isLoggedIn &&
           <div id="google-signin"></div>
         }
-         <a href="http://127.0.0.1:8001/auth/google">
-                    hey
-                </a>
+         
         {isLoggedIn &&
           <div>
             <div>
