@@ -28,35 +28,34 @@ class JobRepository {
     return this.model.find({ 'saved': 'true' });
   }
 
+  findByName(username) {
+    return this.model.findById(id);
+  }
 
-  //find Reminder by the id
+
+  //find Job by the id
   findById(id) {
     return this.model.findById(id);
   }
 
-  // delete Reminder
+  // delete Job
   deleteById(id) {
     return this.model.findByIdAndDelete(id);
   }
 
-  // update all Reminders
+  // update all Jobs
   updateAll() {
     return this.model.updateMany({}, { $set: { done: false } });
   }
 
-  //find Reminder by id and update it
+  //find Job by id and update it
   updateById(id, object) {
     const query = { _id: id };
     return console.log("Job Saved", "ID: ", id), this.model.findOneAndUpdate(query, { $set: { saved: true } });
   }
 
-  //find Reminder by id and update priority
-  setPriority(id, object) {
-    const query = { _id: id };
-    return this.model.findOneAndUpdate(query, { $set: { priority: object.priority } });
-  }
-
-  //find Reminder by name and update it
+  
+  //find Job by name and update it
   updateByName(name, object) {
     const query = { name: name };
     return this.model.findOneAndUpdate(query, { $set: { name: object.name, done: object.done, notification: object.notification } });
