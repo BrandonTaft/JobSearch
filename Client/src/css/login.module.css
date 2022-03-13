@@ -1,4 +1,4 @@
-#google-signin {
+/* #google-signin {
     margin: 10px;
   }
   
@@ -22,4 +22,12 @@
     background-color: #007bff;
     border-color: #007bff;
     cursor: pointer;
-  }
+  } */
+
+  .wrapper {
+    padding: 5px 20px;
+}
+
+.wrapper fieldset {
+    margin: 20px 0;
+}

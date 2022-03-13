@@ -1,9 +1,9 @@
 *{
-    padding: 0; border: 0; margin: 0; 
+    
     box-sizing: border-box;
-    list-style-type: none; /* Styled in normalize.css */
-    text-decoration: none;
-    color: silver;
+     /* Styled in normalize.css */
+    
+    
 }
 
 
@@ -35,6 +35,7 @@ body{
 }
 
 .hamburger-bun{
+    
     position: fixed;
     cursor: pointer;
     width: 55px;
@@ -132,9 +133,9 @@ body{
     top: 0%;
     left: 50%;
     transform: translate(-50%,50%);
-   
     transition-duration: 840ms;
     transition-timing-function: cubic-bezier(.1, .2, .3, 1.4);
+    list-style-type: none;
 }
 
 .main-nav-list a{
