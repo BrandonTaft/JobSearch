@@ -74,7 +74,7 @@ app.post('/api/register', async (req, res) => {
                 });
                 user.save().then(function () {
                     console.log(user);
-                    res.json(user)
+                    res.json({success : true})
                 }).catch((error) => console.log(error));
             }
         })
@@ -91,8 +91,8 @@ app.post('/api/login', async (req, res) => {
     const password = req.body.password
 
     let user = await UserRepository.findByName(username)
-    console.log("user pass",user[0].password)
-    if (user != null) {
+    //console.log("user pass",user[0].password)
+    if (user[0] != null) {
         
         bcrypt.compare(password, user[0].password, (error, result) => {
             if (result) {

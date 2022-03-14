@@ -1,5 +1,6 @@
 import style from "../css/login.module.css";
 import React, { useReducer, useState } from 'react';
+import { NavLink } from "react-router-dom";
 import history from "../History";
 
 
@@ -33,7 +34,7 @@ function Login(props) {
                 if (result.success === true) {
                     localStorage.setItem('jsonwebtoken', result.token)
                     localStorage.setItem('username', result.username)
-                    history.push('/home')
+                    props.history.push('/home')
                     console.log(result)
                 } else {
                     window.alert('HMMM...ARE YOU SURE YOU SHOULD BE HERE?')
@@ -68,6 +69,7 @@ function Login(props) {
 
         <button type="submit">Submit</button>
       </form>
+      <NavLink  to="/signup">Register</NavLink>
       <p>{credentials.username}</p>
     </div>
   )
