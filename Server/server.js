@@ -34,9 +34,9 @@ app.use(session({
 
 }))
 
-checkPortfolio.startPortfolio();
-getGoogleJobs.startGetGoogleJobs();
-getLinkedInJobs.startGetLinkedInJobs();
+// checkPortfolio.startPortfolio();
+// getGoogleJobs.startGetGoogleJobs();
+// getLinkedInJobs.startGetLinkedInJobs();
 
 //************* Create Database Connection ************//
 
@@ -62,7 +62,6 @@ app.post('/api/register', async (req, res) => {
     const password = req.body.password
 
     const persistedUser = await UserRepository.findByName(username)
-
     if (persistedUser[0] == null) {
         bcrypt.hash(password, salt, async (error, hash) => {
             console.log(hash)
@@ -75,16 +74,39 @@ app.post('/api/register', async (req, res) => {
                 });
                 user.save().then(function () {
                     console.log(user);
+                    res.json(user)
                 }).catch((error) => console.log(error));
             }
         })
     } else {
-        console.log("existing user" ,persistedUser[0])
+        console.log("This is an existing user : " ,persistedUser[0].username)
         res.json({ message: " Sorry This UserName Already Exists." })
 
     }
 })
 
+app.post('/api/login', async (req, res) => {
+
+    const username = req.body.username
+    const password = req.body.password
+
+    let user = await UserRepository.findByName(username)
+    console.log("user pass",user[0].password)
+    if (user != null) {
+        
+        bcrypt.compare(password, user[0].password, (error, result) => {
+            if (result) {
+                const token = jwt.sign({ username: username }, process.env.JWT_SECRET_KEY)
+                res.json({ success: true, token: token, username : username })
+            }else {
+                res.json({ success: false, message: 'Not Authenticated' })
+            }
+        })
+        }else {
+            res.json({message: "Username Incorrect"})
+        }
+    
+})
 
 
 //*******************Passport Serialize User***********************//

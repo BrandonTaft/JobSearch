@@ -100,3 +100,83 @@ function Login() {
 }
 
 export default Login
+
+{/* <fieldset>
+          <label>
+            <p>Apples</p>
+            {/* <select name="apple" onChange={handleChange}> */}
+          //   <select name="apple" onChange={handleChange} value={formData.apple || ''}>
+          //     <option value="">--Please choose an option--</option>
+          //     <option value="fuji">Fuji</option>
+          //     <option value="jonathan">Jonathan</option>
+          //     <option value="honey-crisp">Honey Crisp</option>
+          //   </select>
+          // </label>
+          // <label>
+          //   <p>Count</p>
+            {/* <input type="number" name="count" onChange={handleChange} step="1" /> */}
+          //   <input type="number" name="count" onChange={handleChange} step="1" value={formData.count || ''}/>
+          // </label>
+          // <label>
+          //   <p>Gift Wrap</p>
+            {/* <input type="checkbox" name="giftwrap" onChange={handleChange} /> */}
+        //     <input type="checkbox" name="gift-wrap" onChange={handleChange} checked={formData['gift-wrap'] || false}/>
+        //   </label>
+        // </fieldset> */}
+
+        // {submitting &&
+        //   <div>
+        //     You are submitting the following:
+        //     <ul>
+        //       {Object.entries(formData).map(([name, value]) => (
+        //         <li key={name}><strong>{name}</strong>:{value.toString()}</li>
+        //       ))}
+        //     </ul>
+        //   </div>
+        // }
+
+
+        // const [formData, setFormData] = useReducer(formReducer, {});
+        // const formReducer = (state, event) => {
+        //   return {
+        //     ...state,
+        //     [event.name]: event.value
+        //   }
+        // }
+
+        // const handleChange = event => {
+        //   const isCheckbox = event.target.type === 'checkbox';
+        //   setCredentials({
+        //     ...credentials,
+        //     //the name of input will be the name of object and value will be the value
+        //     //[event.target.name]: event.target.value
+      
+      
+        //     [event.target.name] : isCheckbox ? event.target.checked : event.target.value,
+        //   });
+        //   console.log(credentials.Username)
+        // }
+
+      //   return (
+      //     <div className={style.wrapper}>
+      //       <h1>LogIn</h1>
+      //       {/* {submitting &&
+      //        <div>Checking Your Credentials...</div>
+      //      } */}
+            
+      //       <form onSubmit={handleSubmit}>
+      //         <fieldset>
+      //           <label>
+      //             <p>Name</p>
+      //             {/* <input name="Username" onChange={handleChange} /> */}
+      //             <input name="username" onChange={handleChange} value={credentials.username || ''}/>
+      //             <input name="password" onChange={handleChange} value={credentials.password || ''}/>
+      //           </label>
+      //         </fieldset>
+              
+      //         <button type="submit">Submit</button>
+      //       </form>
+      //       <p>{credentials.Username}</p>
+      //     </div>
+      //   )
+      // }

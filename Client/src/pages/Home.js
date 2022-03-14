@@ -8,7 +8,7 @@ import LinkedInJobs from "../components/LinkedInJobs";
 
 
 
-function Home() {
+function Home(props) {
 
     return (
         
