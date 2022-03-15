@@ -5,10 +5,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 
 
-function Login(props) {
+function Login() {
 
   const [credentials, setCredentials] = useState({});
-  const [loggedIn, setLoggedIn] = useState(false);
   let navigate = useNavigate();
 
   const handleChange = event => {
@@ -33,12 +32,11 @@ function Login(props) {
         }).then(response => response.json())
             .then(result => {
                 if (result.success === true) {
-                  setLoggedIn(true)
-                  console.log("hey", loggedIn())
+                
+                    localStorage.setItem('isAuthenticated', true);
                     localStorage.setItem('jsonwebtoken', result.token);
                     localStorage.setItem('username', result.username);
-                    
-                   navigate("/home", {state:{id:1,name:loggedIn}})
+                   navigate("/home", {state:{authenticated:true, token: result.token}})
                 } else {
                     window.alert('HMMM...ARE YOU SURE YOU SHOULD BE HERE?')
                 }
