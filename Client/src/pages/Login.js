@@ -1,14 +1,15 @@
 import style from "../css/login.module.css";
-import React, { useReducer, useState } from 'react';
-import { NavLink } from "react-router-dom";
-import history from "../History";
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from "react-router-dom";
+
 
 
 
 function Login(props) {
 
   const [credentials, setCredentials] = useState({});
-  const [submitting, setSubmitting] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  let navigate = useNavigate();
 
   const handleChange = event => {
     setCredentials({
@@ -19,7 +20,7 @@ function Login(props) {
     console.log(credentials.username)
   }
 
-  const handleSubmit = event => {
+ function handleSubmit(event){
      event.preventDefault();
     // setSubmitting(true);
 
@@ -32,10 +33,12 @@ function Login(props) {
         }).then(response => response.json())
             .then(result => {
                 if (result.success === true) {
-                    localStorage.setItem('jsonwebtoken', result.token)
-                    localStorage.setItem('username', result.username)
-                    props.history.push('/home')
-                    console.log(result)
+                  setLoggedIn(true)
+                  console.log("hey", loggedIn())
+                    localStorage.setItem('jsonwebtoken', result.token);
+                    localStorage.setItem('username', result.username);
+                    
+                   navigate("/home", {state:{id:1,name:loggedIn}})
                 } else {
                     window.alert('HMMM...ARE YOU SURE YOU SHOULD BE HERE?')
                 }

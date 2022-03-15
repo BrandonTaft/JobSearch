@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
-import { NavLink } from "react-router-dom";
+import React, { useState } from 'react';
+import { NavLink, useNavigate} from "react-router-dom";
 
 
-function Register(props) {
+
+function Register() {
+    let navigate = useNavigate();
     const [user, setUser] = useState({})
     const handleRegisterChange = (e) => {
         setUser({
@@ -11,6 +13,7 @@ function Register(props) {
         })
     }
     const handleRegisterButton = () => {
+
         fetch('http://localhost:8001/api/register', {
             method: 'POST',
             headers: {
@@ -20,7 +23,7 @@ function Register(props) {
         }).then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    props.history.push('/')
+                    navigate("/");
                 }
                 else {
                     window.alert('THIS USER ALREADY EXISTS')
