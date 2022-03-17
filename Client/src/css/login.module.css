@@ -26,8 +26,30 @@
 
   .wrapper {
     padding: 5px 20px;
+
 }
 
 .wrapper fieldset {
     margin: 20px 0;
+}
+
+.googleBtn{
+  display: flex;
+  flex-direction: row;
+  padding: 0px 2px 0px 0px;
+  background-color: #4285f4;
+  color: white;
+  width: 50%;
+  line-height: 40px;
+
+}
+
+.googleLogo{
+  background-color: white;
+ 
+}
+
+.btnText{
+  width: 100%;
+  text-align: center;
 }

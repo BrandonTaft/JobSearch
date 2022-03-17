@@ -63,7 +63,7 @@ function Login() {
           <label>
             <p>Name</p>
             {/* <input name="Username" onChange={handleChange} /> */}
-            <input name="username" onChange={handleChange} value={credentials.username || ''} />
+            <input name="username" onChange={handleChange} value={credentials.username || ''} /><br/>
             <input name="password" onChange={handleChange} value={credentials.password || ''} />
           </label>
         </fieldset>
@@ -72,6 +72,10 @@ function Login() {
       </form>
       <NavLink  to="/signup">Register</NavLink>
       <p>{credentials.username}</p>
+      <button className={style.googleBtn} type="button">
+        <img className={style.googleLogo} src="/google.png" alt="google logo"/>
+        <div className={style.btnText}>Log in with Google</div>
+      </button>
     </div>
   )
 }
