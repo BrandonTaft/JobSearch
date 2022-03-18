@@ -1,6 +1,6 @@
 import style from "../css/login.module.css";
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate} from "react-router-dom";
 
 
 
@@ -52,30 +52,38 @@ function Login() {
 
 
   return (
-    <div className={style.wrapper}>
-      <h1>LogIn</h1>
+    <div className={style.loginWrapper}>
+      <div className={style.leftLogin}>
+      <div className={style.leftLoginBox}>
+      
       {/* {submitting &&
        <div>Checking Your Credentials...</div>
      } */}
 
-      <form onSubmit={handleSubmit}>
+      <form className={style.loginForm} onSubmit={handleSubmit}>
         <fieldset>
-          <label>
-            <p>Name</p>
-            {/* <input name="Username" onChange={handleChange} /> */}
-            <input name="username" onChange={handleChange} value={credentials.username || ''} /><br/>
-            <input name="password" onChange={handleChange} value={credentials.password || ''} />
-          </label>
+          
+            
+            <input name="username" placeholder="Username" onChange={handleChange} value={credentials.username || ''} />
+            <br /><br />
+            <input name="password" placeholder="Password" onChange={handleChange} value={credentials.password || ''} />
+          
         </fieldset>
 
         <button type="submit">Submit</button>
       </form>
       <NavLink  to="/signup">Register</NavLink>
-      <p>{credentials.username}</p>
-      <button className={style.googleBtn} type="button">
+      <p>___________or___________</p>
+      <form action="http://127.0.0.1:8001/auth/google">
+      <button className={style.googleBtn} type="submit">
         <img className={style.googleLogo} src="/google.png" alt="google logo"/>
         <div className={style.btnText}>Log in with Google</div>
       </button>
+      </form>
+      </div>
+      </div>
+      
+      
     </div>
   )
 }

@@ -6,10 +6,13 @@
     
 }
 
+#root{
+    height: 100vh;
+  }
 
 body{
     margin: 0;
-    height: 200vh;
+    /* height: 200vh; */
 }
 
 .nav-bar{
