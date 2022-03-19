@@ -30,8 +30,8 @@ app.use('/', express.static(path.join(__dirname, '/')));
 app.use(session({
     secret: process.env.SECRET_KEY,
     resave: true,
-    saveUninitialized: true
-
+    saveUninitialized: true,
+    cookie: { secure: false }
 }))
 
 // checkPortfolio.startPortfolio();
@@ -133,8 +133,8 @@ app.get(
     passport.authenticate("google", {
         failureRedirect: "http://127.0.0.1:3000/"
     }),
-    function (req, res) {
-
+    function (req, res, token) {
+        res.cookie("Access Token", token)
         res.redirect("http://127.0.0.1:3000/home");
     }
 );
@@ -145,11 +145,52 @@ passport.use(
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             callbackURL: "http://127.0.0.1:8001/auth/google/callback"
         },
-        function (accessToken, refreshToken, profile, done) {
-            return done(null, profile,
-                console.log(JSON.stringify(profile), 'AccessToken:', accessToken, 'Refresh Token:', refreshToken))
-        }
-    ))
+    //     function (accessToken, refreshToken, profile, done) {
+    //         return done(null, profile,
+    //             console.log(JSON.stringify(profile), 'AccessToken:', accessToken, 'Refresh Token:', refreshToken))
+    //     }
+    // ))
+    async function(request, accessToken, refreshToken, profile, done) {
+        const name = profile.displayName;
+      const password = profile.id;
+      const token = profile.accessToken;
+
+      let persistedUser = await UserRepository.findByName(name)
+
+      if (persistedUser[0] == null) {
+        console.log("user");
+        bcrypt.hash(password, salt, async (error, hash) => {
+          console.log(hash);
+          if (error) {
+            res.json({ message: "Something Went Wrong!!!" });
+          } else {
+            const user = new User({
+                username: name,
+                password: hash
+            });
+            let savedUser = await user.save();
+            if (savedUser != null) {
+              console.log("{ success: true }");
+              return done(
+                null,
+                profile,
+                console.log("new user was added by passport")
+              );
+            }
+          }
+        });
+      } else {
+        console.log('res.json({ message: "Existing User" })');
+        return done(
+          null,
+          profile,
+          token,
+          console.log("existing user was authenticated")
+        );
+      }
+    }
+  )
+);
 
 app.get('/api/portfolio', (req, res) => {
     const date = new Date().getDay()

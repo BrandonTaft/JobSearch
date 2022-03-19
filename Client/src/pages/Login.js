@@ -1,6 +1,9 @@
 import style from "../css/login.module.css";
 import React, { useState } from 'react';
-import { NavLink, useNavigate} from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import google from "../img/google.png";
+import logo from "../img/clearlogo.png";
+
 
 
 
@@ -8,6 +11,7 @@ import { NavLink, useNavigate} from "react-router-dom";
 function Login() {
 
   const [credentials, setCredentials] = useState({});
+  const [warning, setWarning] = useState({})
   let navigate = useNavigate();
 
   const handleChange = event => {
@@ -16,36 +20,30 @@ function Login() {
       //the name of input will be the name of object and value will be the value
       [event.target.name]: event.target.value
     });
-    console.log(credentials.username)
   }
 
- function handleSubmit(event){
-     event.preventDefault();
+  function handleSubmit(event) {
+    event.preventDefault();
     // setSubmitting(true);
 
     fetch('http://localhost:8001/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(credentials)
-        }).then(response => response.json())
-            .then(result => {
-                if (result.success === true) {
-                
-                    localStorage.setItem('isAuthenticated', true);
-                    localStorage.setItem('jsonwebtoken', result.token);
-                    localStorage.setItem('username', result.username);
-                   navigate("/home", {state:{authenticated:true, token: result.token}})
-                } else {
-                    window.alert('HMMM...ARE YOU SURE YOU SHOULD BE HERE?')
-                }
-            })
-    
-    // console.log(credentials.username)
-    // setTimeout(() => {
-    //   setSubmitting(false);
-    // }, 3000)
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    }).then(response => response.json())
+      .then(result => {
+        if (result.success === true) {
+
+          localStorage.setItem('isAuthenticated', true);
+          localStorage.setItem('jsonwebtoken', result.token);
+          localStorage.setItem('username', result.username);
+          navigate("/home", { state: { authenticated: true, token: result.token } })
+        } else {
+          setWarning({ message: "UMM...ARE YOU SURE YOU SHOULD BE HERE?" })
+        }
+      })
   }
 
 
@@ -53,37 +51,37 @@ function Login() {
 
   return (
     <div className={style.loginWrapper}>
+
       <div className={style.leftLogin}>
-      <div className={style.leftLoginBox}>
-      
-      {/* {submitting &&
+        <div className={style.leftLoginBox}>
+          <img src={logo} alt="logo"></img>
+          {/* {submitting &&
        <div>Checking Your Credentials...</div>
      } */}
+          <p className={style.warning}>{warning.message}</p>
+          <form className={style.loginForm} onSubmit={handleSubmit}>
+            <fieldset>
 
-      <form className={style.loginForm} onSubmit={handleSubmit}>
-        <fieldset>
-          
-            
-            <input name="username" placeholder="Username" onChange={handleChange} value={credentials.username || ''} />
-            <br /><br />
-            <input name="password" placeholder="Password" onChange={handleChange} value={credentials.password || ''} />
-          
-        </fieldset>
 
-        <button type="submit">Submit</button>
-      </form>
-      <NavLink  to="/signup">Register</NavLink>
-      <p>___________or___________</p>
-      <form action="http://127.0.0.1:8001/auth/google">
-      <button className={style.googleBtn} type="submit">
-        <img className={style.googleLogo} src="/google.png" alt="google logo"/>
-        <div className={style.btnText}>Log in with Google</div>
-      </button>
-      </form>
+              <input name="username" placeholder="Username" onChange={handleChange} value={credentials.username || ''} />
+              <br /><br />
+              <input name="password" placeholder="Password" onChange={handleChange} value={credentials.password || ''} />
+
+            </fieldset>
+
+            <button type="submit">Submit</button>
+          </form>
+          <NavLink to="/signup">Register Here</NavLink>
+          <p>___________or___________</p>
+
+          <a className={style.googleBtn} href="http://127.0.0.1:8001/auth/google" alt="google">
+            <img className={style.googleLogo} src={google} alt="google logo" />
+            <div className={style.btnText}>Log in with Google</div>
+          </a>
+        </div>
       </div>
-      </div>
-      
-      
+
+
     </div>
   )
 }
