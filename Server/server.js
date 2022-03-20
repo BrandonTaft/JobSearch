@@ -126,15 +126,15 @@ passport.deserializeUser(function (id, done) {
 app.get(
     "/auth/google",
     passport.authenticate("google", { scope: ["profile", 'https://www.googleapis.com/auth/gmail.readonly'] })
-    //passport.authenticate("google", { scope: ['https://www.googleapis.com/auth/gmail.readonly'] })
 );
 app.get(
     "/auth/google/callback",
     passport.authenticate("google", {
         failureRedirect: "http://127.0.0.1:3000/"
     }),
-    function (req, res, token) {
-        res.cookie("Access Token", token)
+    function (req, res) {
+        res.cookie("id", req.user.id)
+        res.cookie("name", req.user.displayName)
         res.redirect("http://127.0.0.1:3000/home");
     }
 );
@@ -143,7 +143,8 @@ passport.use(
         {
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: "http://127.0.0.1:8001/auth/google/callback"
+            callbackURL: "http://127.0.0.1:8001/auth/google/callback",
+            passReqToCallback   : true
         },
     //     function (accessToken, refreshToken, profile, done) {
     //         return done(null, profile,
@@ -158,15 +159,13 @@ passport.use(
       let persistedUser = await UserRepository.findByName(name)
 
       if (persistedUser[0] == null) {
-        console.log("user");
         bcrypt.hash(password, salt, async (error, hash) => {
-          console.log(hash);
           if (error) {
             res.json({ message: "Something Went Wrong!!!" });
           } else {
             const user = new User({
                 username: name,
-                password: hash
+                id: hash
             });
             let savedUser = await user.save();
             if (savedUser != null) {

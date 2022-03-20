@@ -12,6 +12,10 @@ import "../css/nav.css"
 // }
 
  function Navbar() {
+
+    function logout(){
+        localStorage.removeItem("isAuthenticated")
+    }
 //     const [isActive, setActive] = useState("true");
 //     const ToggleclassName = () => {
 //         console.log("hey")
@@ -70,7 +74,7 @@ import "../css/nav.css"
             </div>
             <div className={`main-nav-list ${isActive ? "active" : ""}`}>
                 <ul>
-                    <li><a href="#0">RollTide</a></li>
+                    <li><a onClick={logout}>Logout</a></li>
                     <li><a href="#0"></a></li>
                     <li><a href="#0" className="mobile-hide">Blog</a></li>
                     <li><a href="#0" className="active-link">About</a></li>
