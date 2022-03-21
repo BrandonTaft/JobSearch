@@ -1,12 +1,13 @@
 import jobsService from "../services/jobs-service";
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import style from "../css/googleJobs.module.css";
 import Navbar from "../layouts/Navbar";
 import SaveButton from "./SaveButton";
 
 
 function GoogleJobs(props) {
-
+    const navigate = useNavigate();
     const [googleJobs, setGoogleJobs] = useState([]);
     const [jobDescription, setjobDescription] = useState([]);
 
@@ -25,7 +26,12 @@ function GoogleJobs(props) {
         const getGoogleJobs = () => {
             jobsService.getAllGoogleJobs()
                 .then(response => {
-                    setGoogleJobs(response.data)
+                    console.log(response)
+                   if(response.data.isLoggedIn){
+                    setGoogleJobs(response.data.jobs)
+                   }else{
+                    navigate("/")
+                   }
                 })
                 .catch(e => {
                     console.log(e);

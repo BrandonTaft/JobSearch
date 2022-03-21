@@ -1,9 +1,10 @@
 import style from "../css/savedJobs.module.css";
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import jobsService from "../services/jobs-service";
 
 function SavedJobs(){
-
+    const navigate = useNavigate();
     const [savedJobs, setSavedJobs] = useState([]);
     const [jobDescription, setjobDescription] = useState([]);
 
@@ -20,7 +21,11 @@ function SavedJobs(){
         const getSaved = () => {
             jobsService.getSavedJobs()
                 .then(response => {
-                    setSavedJobs(response.data)
+                    if(response.data.isLoggedIn){
+                    setSavedJobs(response.data.jobs)
+                    }else{
+                        navigate("/")
+                    }
                 })
                 .catch(e => {
                     console.log(e);
@@ -28,7 +33,7 @@ function SavedJobs(){
         }
 
         getSaved();
-    }, [savedJobs]);
+    }, []);
 
     const savedJobsDisplay = savedJobs.map(job => {
         return (

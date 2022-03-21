@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import logo from "../img/logo.png";
 //import style from "../css/navbar.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate} from "react-router-dom";
 import "../css/nav.css"
 //import cx from 'classNameNames';
 
@@ -12,9 +12,10 @@ import "../css/nav.css"
 // }
 
  function Navbar() {
-
+    const navigate = useNavigate();
     function logout(){
-        localStorage.removeItem("isAuthenticated")
+        localStorage.removeItem("jsonwebtoken")
+        navigate("/")
     }
 //     const [isActive, setActive] = useState("true");
 //     const ToggleclassName = () => {

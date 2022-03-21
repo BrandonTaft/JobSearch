@@ -1,12 +1,13 @@
 import jobsService from "../services/jobs-service";
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import style from "../css/linkedInJobs.module.css";
 import Navbar from "../layouts/Navbar";
 import SaveButton from "./SaveButton";
 
 
 function LinkedInJobs(props) {
-
+    const navigate = useNavigate();
     const [linkedInJobs, setLinkedInJobs] = useState([]);
     const [jobDescription, setjobDescription] = useState([]);
 
@@ -25,7 +26,12 @@ function LinkedInJobs(props) {
         const getLinkedInJobs = () => {
             jobsService.getAllLinkedInJobs()
                 .then(response => {
-                    setLinkedInJobs(response.data)
+                    console.log(response)
+                    if(response.data.isLoggedIn){
+                    setLinkedInJobs(response.data.jobs)
+                    }else{
+                        navigate("/")
+                    }
                 })
                 .catch(e => {
                     console.log(e);

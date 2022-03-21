@@ -51,8 +51,26 @@ mongoose.connect(config.DB, {
         process.exit();
     });
 
+//************* Middleware ***************/
 
+function verifyJWT(req, res, next) {
+    // removes 'Bearer` from token
+    const token = req.headers["x-access-token"]?.split(' ')[1]
 
+    if (token) {
+        jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+            if (err) return res.json({isLoggedIn: false, message: "Failed To Authenticate"})
+            req.user = {};
+            req.user.id = decoded.id
+            req.user.username = decoded.username
+            req.user.pfp = decoded.pfp
+            console.log("authenticated")
+            next()
+        })
+    } else {
+        res.json({message: "Incorrect Token Given", isLoggedIn: false})
+    }
+}
 
 //************* Registration ************//
 
@@ -91,13 +109,12 @@ app.post('/api/login', async (req, res) => {
     const password = req.body.password
 
     let user = await UserRepository.findByName(username)
-    //console.log("user pass",user[0].password)
     if (user[0] != null) {
         
         bcrypt.compare(password, user[0].password, (error, result) => {
             if (result) {
-                const token = jwt.sign({ username: username }, process.env.JWT_SECRET_KEY)
-                res.json({ success: true, token: token, username : username })
+                const token = jwt.sign({ username: username, id:user[0]._id }, process.env.JWT_SECRET_KEY)
+                res.json({ success: true, token: "Bearer " + token, username : username })
             }else {
                 res.json({ success: false, message: 'Not Authenticated' })
             }
@@ -130,12 +147,16 @@ app.get(
 app.get(
     "/auth/google/callback",
     passport.authenticate("google", {
+        
         failureRedirect: "http://127.0.0.1:3000/"
     }),
     function (req, res) {
+        const token = jwt.sign({ username: req.user.displayName, id:req.user.id }, process.env.JWT_SECRET_KEY)
+                res.cookie("jsonwebtoken", "Bearer " + token)
+            
         res.cookie("id", req.user.id)
         res.cookie("name", req.user.displayName)
-        res.redirect("http://127.0.0.1:3000/home");
+        res.redirect("http://127.0.0.1:3000/home")
     }
 );
 passport.use(
@@ -169,7 +190,6 @@ passport.use(
             });
             let savedUser = await user.save();
             if (savedUser != null) {
-              console.log("{ success: true }");
               return done(
                 null,
                 profile,
@@ -196,28 +216,28 @@ app.get('/api/portfolio', (req, res) => {
     res.sendFile(__dirname + `/screenshots/status-pic${date}.png`)
 });
 
-app.get('/api/googlejobs', (req, res) => {
+app.get('/api/googlejobs', verifyJWT, (req, res) => {
     repository.findAllGoogle().then(function (jobs) {
-        res.json(jobs);
+        res.json({isLoggedIn: true, jobs: jobs});
     }).catch((error) => console.log(error));
 });
 
 
-app.get('/api/linkedin-jobs', (req, res) => {
+app.get('/api/linkedin-jobs', verifyJWT, (req, res) => {
     repository.findAllLinkedIn().then(function (jobs) {
-        res.json(jobs);
+        res.json({isLoggedIn: true, jobs: jobs});
     }).catch((error) => console.log(error));
 });
 
 
-app.get('/api/linkedinjobs', (req, res) => {
+app.get('/api/linkedinjobs', verifyJWT, (req, res) => {
     linkedIn.getLinkedInJobs().then(function (info) {
-        res.json(info)
+        res.json({isLoggedIn: true, info: info});
     });
 
 })
 
-app.get('/api/serpjobs', (req, res) => {
+app.get('/api/serpjobs', verifyJWT, (req, res) => {
     const SerpApi = require('google-search-results-nodejs');
     const search = new SerpApi.GoogleSearch("d2498eb38600b5fef854d9462c8f8b1ec0cda0b4d06b3cd4e2fbbe08379730a3");
     const params = {
@@ -238,7 +258,7 @@ app.get('/api/serpjobs', (req, res) => {
             if (job.description.includes(string) || job.title.includes("No Experience Required"))
                 console.log("Name: ", job.company_name, ", Title: ", job.title)
         })
-        res.json(myJobs)
+        res.json({isLoggedIn: true, jobs: myJobs});
     };
 
     search.json(params, callback);
@@ -254,9 +274,9 @@ app.put('/api/:id', (req, res) => {
         .catch((error) => console.log(error));
 });
 
-app.get('/api/savedjobs', (req, res) => {
+app.get('/api/savedjobs', verifyJWT,  (req, res) => {
     repository.findSaved().then(function (jobs) {
-        res.json(jobs);
+        res.json({isLoggedIn: true, jobs: jobs});;
     }).catch((error) => console.log(error));
 });
 
