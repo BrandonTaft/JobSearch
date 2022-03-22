@@ -13,14 +13,7 @@ import Login from "./Login";
 
 function Home(props) {
     const navigate = useNavigate();
-    //     const [loggedIn, setLoggedIn] = useState(false);
-//          const location = useLocation();
-//   const data = location.state.token
-//   console.log("this a test yall",data)
-    const token = Cookies.get('jsonwebtoken');
-    localStorage.setItem('jsonwebtoken', token);
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
-    const hasId = Cookies.get('id');
+    
     return (
 
         <div className={style.home}>
@@ -29,15 +22,15 @@ function Home(props) {
                 <div>
                     <Navbar />
 
-                     <div>
+                     {/* <div>
                         <h1>Profile</h1>
                         <Portfolio />
-                    </div>
+                    </div> */}
 
-                    <div>
+                    {/* <div>
                         <h1>Saved Jobs</h1>
                         <SavedJobs />
-                    </div> 
+                    </div>  */}
                     <div>
                         <h1>Google Jobs</h1>
                         <GoogleJobs />

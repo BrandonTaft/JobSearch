@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import style from "../css/googleJobs.module.css";
 import Navbar from "../layouts/Navbar";
-import SaveButton from "./SaveButton";
+
 
 
 function GoogleJobs(props) {
@@ -43,7 +43,8 @@ function GoogleJobs(props) {
 
     const leftDisplay = googleJobs.map(job => {
         return (
-
+            
+                
             <ul className={style.jobs} key={job._id}>
                 <h5>{job.title}</h5>
                 <button onClick={() => displayDescription(job)}>description</button> 
@@ -53,7 +54,7 @@ function GoogleJobs(props) {
                 <button onClick={() => saveJob(job)}>Save Job</button>
                 
             </ul>
-
+         
 
         )
     });
@@ -61,6 +62,7 @@ function GoogleJobs(props) {
     return (
         <section>
         <div className={style.googleJobs}>
+            <Navbar />
             <div className={style.left}>
                 {leftDisplay}
             </div>

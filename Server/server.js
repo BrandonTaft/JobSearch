@@ -54,23 +54,28 @@ mongoose.connect(config.DB, {
 //************* Middleware ***************/
 
 function verifyJWT(req, res, next) {
-    // removes 'Bearer` from token
-    const token = req.headers["x-access-token"]?.split(' ')[1]
-
+   
+    console.log("TOkkkkkENnnnn", req.headers["x-access-token"])
+    const token = req.headers["x-access-token"]
+    console.log("TOkkkkEN", token)
     if (token) {
+
         jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
-            if (err) return res.json({isLoggedIn: false, message: "Failed To Authenticate"})
+            if (err) return res.json({ isLoggedIn: false, message: "Failed To Authenticate" })
             req.user = {};
             req.user.id = decoded.id
             req.user.username = decoded.username
-            req.user.pfp = decoded.pfp
             console.log("authenticated")
             next()
         })
     } else {
-        res.json({message: "Incorrect Token Given", isLoggedIn: false})
+        res.json({ message: "Incorrect Token Given", isLoggedIn: false })
     }
 }
+
+app.get("/isUserAuth", verifyJWT, (req, res) => {
+    return res.json({isLoggedIn: true, username: req.user.username})
+})
 
 //************* Registration ************//
 
@@ -82,7 +87,6 @@ app.post('/api/register', async (req, res) => {
     const persistedUser = await UserRepository.findByName(username)
     if (persistedUser[0] == null) {
         bcrypt.hash(password, salt, async (error, hash) => {
-            console.log(hash)
             if (error) {
                 res.json({ message: "Something Went Wrong!!!" })
             } else {
@@ -92,12 +96,12 @@ app.post('/api/register', async (req, res) => {
                 });
                 user.save().then(function () {
                     console.log(user);
-                    res.json({success : true})
+                    res.json({ success: true })
                 }).catch((error) => console.log(error));
             }
         })
     } else {
-        console.log("This is an existing user : " ,persistedUser[0].username)
+        console.log("This is an existing user : ", persistedUser[0].username)
         res.json({ message: " Sorry This UserName Already Exists." })
 
     }
@@ -110,19 +114,19 @@ app.post('/api/login', async (req, res) => {
 
     let user = await UserRepository.findByName(username)
     if (user[0] != null) {
-        
+
         bcrypt.compare(password, user[0].password, (error, result) => {
             if (result) {
-                const token = jwt.sign({ username: username, id:user[0]._id }, process.env.JWT_SECRET_KEY)
-                res.json({ success: true, token: "Bearer " + token, username : username })
-            }else {
+                const token = jwt.sign({ username: username, id: user[0]._id }, process.env.JWT_SECRET_KEY)
+                res.json({ success: true, token: token, username: username })
+            } else {
                 res.json({ success: false, message: 'Not Authenticated' })
             }
         })
-        }else {
-            res.json({message: "Username Incorrect"})
-        }
-    
+    } else {
+        res.json({ message: "Username Incorrect" })
+    }
+
 })
 
 
@@ -147,13 +151,13 @@ app.get(
 app.get(
     "/auth/google/callback",
     passport.authenticate("google", {
-        
+
         failureRedirect: "http://127.0.0.1:3000/"
     }),
     function (req, res) {
-        const token = jwt.sign({ username: req.user.displayName, id:req.user.id }, process.env.JWT_SECRET_KEY)
-                res.cookie("jsonwebtoken", "Bearer " + token)
-            
+        const token = jwt.sign({ username: req.user.displayName, id: req.user.id }, process.env.JWT_SECRET_KEY)
+        res.cookie("jsonwebtoken", "Bearer " + token)
+
         res.cookie("id", req.user.id)
         res.cookie("name", req.user.displayName)
         res.redirect("http://127.0.0.1:3000/home")
@@ -165,50 +169,50 @@ passport.use(
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             callbackURL: "http://127.0.0.1:8001/auth/google/callback",
-            passReqToCallback   : true
+            passReqToCallback: true
         },
-    //     function (accessToken, refreshToken, profile, done) {
-    //         return done(null, profile,
-    //             console.log(JSON.stringify(profile), 'AccessToken:', accessToken, 'Refresh Token:', refreshToken))
-    //     }
-    // ))
-    async function(request, accessToken, refreshToken, profile, done) {
-        const name = profile.displayName;
-      const password = profile.id;
-      const token = profile.accessToken;
+        //     function (accessToken, refreshToken, profile, done) {
+        //         return done(null, profile,
+        //             console.log(JSON.stringify(profile), 'AccessToken:', accessToken, 'Refresh Token:', refreshToken))
+        //     }
+        // ))
+        async function (request, accessToken, refreshToken, profile, done) {
+            const name = profile.displayName;
+            const password = profile.id;
+            const token = profile.accessToken;
 
-      let persistedUser = await UserRepository.findByName(name)
+            let persistedUser = await UserRepository.findByName(name)
 
-      if (persistedUser[0] == null) {
-        bcrypt.hash(password, salt, async (error, hash) => {
-          if (error) {
-            res.json({ message: "Something Went Wrong!!!" });
-          } else {
-            const user = new User({
-                username: name,
-                id: hash
-            });
-            let savedUser = await user.save();
-            if (savedUser != null) {
-              return done(
-                null,
-                profile,
-                console.log("new user was added by passport")
-              );
+            if (persistedUser[0] == null) {
+                bcrypt.hash(password, salt, async (error, hash) => {
+                    if (error) {
+                        res.json({ message: "Something Went Wrong!!!" });
+                    } else {
+                        const user = new User({
+                            username: name,
+                            id: hash
+                        });
+                        let savedUser = await user.save();
+                        if (savedUser != null) {
+                            return done(
+                                null,
+                                profile,
+                                console.log("new user was added by passport")
+                            );
+                        }
+                    }
+                });
+            } else {
+                console.log('res.json({ message: "Existing User" })');
+                return done(
+                    null,
+                    profile,
+                    token,
+                    console.log("existing user was authenticated")
+                );
             }
-          }
-        });
-      } else {
-        console.log('res.json({ message: "Existing User" })');
-        return done(
-          null,
-          profile,
-          token,
-          console.log("existing user was authenticated")
-        );
-      }
-    }
-  )
+        }
+    )
 );
 
 app.get('/api/portfolio', (req, res) => {
@@ -218,21 +222,21 @@ app.get('/api/portfolio', (req, res) => {
 
 app.get('/api/googlejobs', verifyJWT, (req, res) => {
     repository.findAllGoogle().then(function (jobs) {
-        res.json({isLoggedIn: true, jobs: jobs});
+        res.json({ isLoggedIn: true, jobs: jobs });
     }).catch((error) => console.log(error));
 });
 
 
 app.get('/api/linkedin-jobs', verifyJWT, (req, res) => {
     repository.findAllLinkedIn().then(function (jobs) {
-        res.json({isLoggedIn: true, jobs: jobs});
+        res.json({ isLoggedIn: true, jobs: jobs });
     }).catch((error) => console.log(error));
 });
 
 
 app.get('/api/linkedinjobs', verifyJWT, (req, res) => {
     linkedIn.getLinkedInJobs().then(function (info) {
-        res.json({isLoggedIn: true, info: info});
+        res.json({ isLoggedIn: true, info: info });
     });
 
 })
@@ -258,7 +262,7 @@ app.get('/api/serpjobs', verifyJWT, (req, res) => {
             if (job.description.includes(string) || job.title.includes("No Experience Required"))
                 console.log("Name: ", job.company_name, ", Title: ", job.title)
         })
-        res.json({isLoggedIn: true, jobs: myJobs});
+        res.json({ isLoggedIn: true, jobs: myJobs });
     };
 
     search.json(params, callback);
@@ -274,9 +278,9 @@ app.put('/api/:id', (req, res) => {
         .catch((error) => console.log(error));
 });
 
-app.get('/api/savedjobs', verifyJWT,  (req, res) => {
+app.get('/api/savedjobs', verifyJWT, (req, res) => {
     repository.findSaved().then(function (jobs) {
-        res.json({isLoggedIn: true, jobs: jobs});;
+        res.json({ isLoggedIn: true, jobs: jobs });;
     }).catch((error) => console.log(error));
 });
 

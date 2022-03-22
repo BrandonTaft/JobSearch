@@ -14,7 +14,7 @@ import "../css/nav.css"
  function Navbar() {
     const navigate = useNavigate();
     function logout(){
-        localStorage.removeItem("jsonwebtoken")
+        localStorage.clear()
         navigate("/")
     }
 //     const [isActive, setActive] = useState("true");
