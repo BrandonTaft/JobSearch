@@ -27,13 +27,15 @@ function Login() {
     fetch('http://localhost:8001/api/login', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        
       },
       body: JSON.stringify(credentials)
     }).then(response => response.json())
     
       .then(result => {
         if (result.success === true) {
+          console.log("TEST",result.token)
           localStorage.setItem('isAuthenticated', true);
           localStorage.setItem('jsonwebtoken', result.token);
           localStorage.setItem('username', result.username);
