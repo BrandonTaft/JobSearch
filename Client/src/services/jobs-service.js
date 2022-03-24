@@ -1,6 +1,6 @@
 import http from "../http";
 
-//Service that uses the Axios object to send http requests
+
 class JobsService {
   getAllGoogleJobs() {
     return http.get("/googlejobs");
