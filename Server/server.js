@@ -57,8 +57,9 @@ function verifyJWT(req, res, next) {
    
     console.log("TOkkkkkENnnnn", req.headers["x-access-token"])
     const token = req.headers["x-access-token"]
+
     console.log("TOkkkkEN", token)
-    if (token) {
+    if (token !== null) {
 
         jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
             if (err) return res.json({ isLoggedIn: false, message: "Failed To Authenticate" })
