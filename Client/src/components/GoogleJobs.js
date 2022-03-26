@@ -1,4 +1,5 @@
-import jobsService from "../services/jobs-service";
+//import jobsService from "../services/jobs-service";
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import style from "../css/googleJobs.module.css";
@@ -15,16 +16,25 @@ function GoogleJobs(props) {
         setjobDescription( job.description)
     };
 
-    function saveJob(job){
-        const id = job._id;
-        jobsService.update(id, job)
-    }
+    // function saveJob(job){
+    //     const id = job._id;
+    //     jobsService.update(id, job)
+    // }
 
    
 
     useEffect(() => {
         const getGoogleJobs = () => {
-            jobsService.getAllGoogleJobs()
+           //const token = localStorage.getItem("token");
+           //console.log("google component is about to request from server, ", token)
+           //if(token)
+           // jobsService.getAllGoogleJobs()
+           fetch("http://127.0.0.1:8001/api/googlejobs", {
+               method: 'GET',
+            headers: {
+                "x-access-token": localStorage.getItem("token")
+            }
+        })
                 .then(response => {
                     console.log(response)
                    if(response.data.isLoggedIn){
@@ -51,7 +61,7 @@ function GoogleJobs(props) {
                 <p>{job.company}</p>
                 <p>{job.location}</p>
                 <a href={job.href} alt="Link">Apply Here</a>
-                <button onClick={() => saveJob(job)}>Save Job</button>
+                {/* <button onClick={() => saveJob(job)}>Save Job</button> */}
                 
             </ul>
          

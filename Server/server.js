@@ -54,23 +54,20 @@ mongoose.connect(config.DB, {
 //************* Middleware ***************/
 
 function verifyJWT(req, res, next) {
-   
-    console.log("TOkkkkkENnnnn", req.headers["x-access-token"])
-    const token = req.headers["x-access-token"]
+    // removes 'Bearer` from token
+    const token = req.headers["x-access-token"]?.split(' ')[1]
 
-    console.log("TOkkkkEN", token)
-    if (token !== null) {
-
-        jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
-            if (err) return res.json({ isLoggedIn: false, message: "Failed To Authenticate" })
+    if (token) {
+        jwt.verify(token, process.env.PASSPORTSECRET, (err, decoded) => {
+            if (err) return res.json({isLoggedIn: false, message: "Failed To Authenticate"})
             req.user = {};
             req.user.id = decoded.id
             req.user.username = decoded.username
-            console.log("authenticated")
+            req.user.pfp = decoded.pfp
             next()
         })
     } else {
-        res.json({ message: "Incorrect Token Given", isLoggedIn: false })
+        res.json({message: "Incorrect Token Given", isLoggedIn: false})
     }
 }
 
@@ -119,7 +116,7 @@ app.post('/api/login', async (req, res) => {
         bcrypt.compare(password, user[0].password, (error, result) => {
             if (result) {
                 const token = jwt.sign({ username: username, id: user[0]._id }, process.env.JWT_SECRET_KEY)
-                res.json({ success: true, token: token, username: username })
+                res.json({ success: true, token:"Bearer " + token, username: username })
             } else {
                 res.json({ success: false, message: 'Not Authenticated' })
             }
