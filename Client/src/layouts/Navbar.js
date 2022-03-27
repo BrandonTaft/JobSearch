@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import logo from "../img/logo.png";
 //import style from "../css/navbar.module.css";
 import { NavLink, useNavigate} from "react-router-dom";
-import "../css/nav.css"
+import "../css/nav.css";
+import Cookies from 'js-cookie';
 //import cx from 'classNameNames';
 
 
@@ -14,7 +15,8 @@ import "../css/nav.css"
  function Navbar() {
     const navigate = useNavigate();
     function logout(){
-        localStorage.clear()
+        localStorage.clear();
+        Cookies.remove('jsonwebtoken')
         navigate("/")
     }
 //     const [isActive, setActive] = useState("true");
@@ -76,7 +78,7 @@ import "../css/nav.css"
             <div className={`main-nav-list ${isActive ? "active" : ""}`}>
                 <ul>
                     <li><a onClick={logout}>Logout</a></li>
-                    <li><a href="#0"></a></li>
+                    <NavLink to="/linkedin"  >Linked In</NavLink>
                     <li><a href="#0" className="mobile-hide">Blog</a></li>
                     <li><a href="#0" className="active-link">About</a></li>
                     <li><a href="#0">Contact</a></li>

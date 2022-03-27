@@ -6,9 +6,10 @@ import logo from "../img/clearlogo.png";
 
 
 function Register() {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const [user, setUser] = useState({})
     const [warning, setWarning] = useState({})
+    //sets user input in state
     const handleRegisterChange = (e) => {
         setUser({
             ...user,
@@ -16,6 +17,7 @@ function Register() {
 
         })
     }
+    //handles form submission
     const handleRegisterButton = () => {
         if (user.password !== user.verifyPassword) {
             setWarning({ message: "Passwords Must Match" })

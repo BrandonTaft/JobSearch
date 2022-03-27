@@ -12,6 +12,8 @@ import Login from "./Login";
 
 
 function Home(props) {
+    const token = Cookies.get('jsonwebtoken');
+    localStorage.setItem('token', token);
     const navigate = useNavigate();
     
     return (

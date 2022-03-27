@@ -16,6 +16,7 @@ const repository = require('./app/repositories/JobRepository');
 const UserRepository = require('./app/repositories/UserRepository')
 const passport = require("passport");
 const jwt = require('jsonwebtoken');
+const verifyJWT = require('./app/middleware/verifyJWT')
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const bcrypt = require('bcryptjs');
 const salt = 10;
@@ -51,28 +52,9 @@ mongoose.connect(config.DB, {
         process.exit();
     });
 
-//************* Middleware ***************/
-
-function verifyJWT(req, res, next) {
-    // removes 'Bearer` from token
-    const token = req.headers["x-access-token"]?.split(' ')[1]
-
-    if (token) {
-        jwt.verify(token, process.env.PASSPORTSECRET, (err, decoded) => {
-            if (err) return res.json({isLoggedIn: false, message: "Failed To Authenticate"})
-            req.user = {};
-            req.user.id = decoded.id
-            req.user.username = decoded.username
-            req.user.pfp = decoded.pfp
-            next()
-        })
-    } else {
-        res.json({message: "Incorrect Token Given", isLoggedIn: false})
-    }
-}
 
 app.get("/isUserAuth", verifyJWT, (req, res) => {
-    return res.json({isLoggedIn: true, username: req.user.username})
+    return res.json({ isLoggedIn: true, username: req.user.username })
 })
 
 //************* Registration ************//
@@ -116,7 +98,7 @@ app.post('/api/login', async (req, res) => {
         bcrypt.compare(password, user[0].password, (error, result) => {
             if (result) {
                 const token = jwt.sign({ username: username, id: user[0]._id }, process.env.JWT_SECRET_KEY)
-                res.json({ success: true, token:"Bearer " + token, username: username })
+                res.json({ success: true, token: token, id: user[0]._id, username: username })
             } else {
                 res.json({ success: false, message: 'Not Authenticated' })
             }
@@ -154,8 +136,7 @@ app.get(
     }),
     function (req, res) {
         const token = jwt.sign({ username: req.user.displayName, id: req.user.id }, process.env.JWT_SECRET_KEY)
-        res.cookie("jsonwebtoken", "Bearer " + token)
-
+        res.cookie("jsonwebtoken", token)
         res.cookie("id", req.user.id)
         res.cookie("name", req.user.displayName)
         res.redirect("http://127.0.0.1:3000/home")
