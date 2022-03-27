@@ -79,8 +79,7 @@ import Cookies from 'js-cookie';
                 <ul>
                     <li><a onClick={logout}>Logout</a></li>
                     <NavLink to="/linkedin"  >Linked In</NavLink>
-                    <li><a href="#0" className="mobile-hide">Blog</a></li>
-                    <li><a href="#0" className="active-link">About</a></li>
+                    <NavLink to="/google"  >Google</NavLink>
                     <li><a href="#0">Contact</a></li>
                 </ul>
             </div>
