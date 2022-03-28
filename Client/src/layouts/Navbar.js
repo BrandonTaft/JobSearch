@@ -80,6 +80,7 @@ import Cookies from 'js-cookie';
                     <li><a onClick={logout}>Logout</a></li>
                     <NavLink to="/linkedin"  >Linked In</NavLink>
                     <NavLink to="/google"  >Google</NavLink>
+                    <NavLink to="/saved"  >Saved Jobs</NavLink>
                     <li><a href="#0">Contact</a></li>
                 </ul>
             </div>

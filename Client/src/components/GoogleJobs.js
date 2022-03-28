@@ -1,5 +1,3 @@
-//import jobsService from "../services/jobs-service";
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import style from "../css/googleJobs.module.css";
@@ -8,7 +6,7 @@ import Cookies from 'js-cookie';
 
 
 
-function GoogleJobs(props) {
+function GoogleJobs() {
     const navigate = useNavigate();
     const [googleJobs, setGoogleJobs] = useState([]);
     const [jobDescription, setjobDescription] = useState([]);
@@ -17,31 +15,37 @@ function GoogleJobs(props) {
         setjobDescription(job.description)
     };
 
-    // function saveJob(job) {
-    //     const id = job._id;
-    //     jobsService.update(id, job)
-    // }
+    function saveJob(job) {
+        const id = job._id;
+        fetch(`http://localhost:8001/api/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
 
+            },
+            body: JSON.stringify(job)
+        })
+    }
 
 
     useEffect(() => {
         const getGoogleJobs = () => {
             let token;
             const cookie = Cookies.get('jsonwebtoken');
-            if(cookie == null){
-             token = localStorage.getItem('token')
+            if (cookie == null) {
+                token = localStorage.getItem('token')
             } else {
-             token = Cookies.get('jsonwebtoken');
+                token = Cookies.get('jsonwebtoken');
             }
             fetch('http://localhost:8001/api/googlejobs', {
-        method: 'GET',
-        headers: {
-          'authorization': `Bearer ${token}`
-        }
-      })
-            .then(response => response.json())
+                method: 'GET',
+                headers: {
+                    'authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
                 .then(response => {
-                  
+
                     if (response.isLoggedIn) {
                         setGoogleJobs(response.jobs)
                     } else {
@@ -66,7 +70,7 @@ function GoogleJobs(props) {
                 <p>{job.company}</p>
                 <p>{job.location}</p>
                 <a href={job.href} alt="Link">Apply Here</a>
-                {/* <button onClick={() => saveJob(job)}>Save Job</button> */}
+                <button onClick={() => saveJob(job)}>Save Job</button>
 
             </ul>
 

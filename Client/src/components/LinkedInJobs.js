@@ -5,7 +5,8 @@ import Navbar from "../layouts/Navbar";
 import Cookies from 'js-cookie';
 
 
-function LinkedInJobs(props) {
+
+function LinkedInJobs() {
     const navigate = useNavigate();
     const [linkedInJobs, setLinkedInJobs] = useState([]);
     const [jobDescription, setjobDescription] = useState([]);
@@ -14,10 +15,16 @@ function LinkedInJobs(props) {
         setjobDescription(job.description)
     };
 
-    // function saveJob(job) {
-    //     const id = job._id;
-    //     jobsService.update(id, job)
-    // }
+    function saveJob(job) {
+        const id = job._id;
+       fetch(`http://localhost:8001/api/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+     },
+      body: JSON.stringify(job)
+    })
+    }
 
     useEffect(() => {
         const getLinkedInJobs = () => {
@@ -36,6 +43,7 @@ function LinkedInJobs(props) {
             })
                 .then(response => response.json())
                 .then(response => {
+                    console.log(response)
                     if (response.isLoggedIn) {
                         console.log(response)
                         setLinkedInJobs(response.jobs)
@@ -60,7 +68,7 @@ function LinkedInJobs(props) {
                     <p>{job.company}</p>
                     <p>{job.location}</p>
                     <a href={job.href} alt="Link">Apply Here</a>
-                    {/* <button onClick={() => saveJob(job)}>Save Job</button> */}
+                    <button onClick={() => saveJob(job)}>Save Job</button>
                 </ul>
            
 

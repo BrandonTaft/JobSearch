@@ -1,12 +1,40 @@
 import style from "../css/savedJobs.module.css";
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import jobsService from "../services/jobs-service";
+import Cookies from "js-cookie";
 
 function SavedJobs(){
     const navigate = useNavigate();
     const [savedJobs, setSavedJobs] = useState([]);
     const [jobDescription, setjobDescription] = useState([]);
+
+    const getSaved = () => {
+        let token;
+         const cookie = Cookies.get('jsonwebtoken');
+         if (cookie == null) {
+             token = localStorage.getItem('token')
+         } else {
+             token = Cookies.get('jsonwebtoken');
+         }
+         fetch('http://localhost:8001/api/savedjobs', {
+             method: 'GET',
+             headers: {
+                 'authorization': `Bearer ${token}`
+             }
+         })
+         .then(response => response.json())
+             .then(response => {
+                 if(response.isLoggedIn){
+                 setSavedJobs(response.jobs)
+                 }else{
+                     navigate("/")
+                 }
+             })
+             .catch(e => {
+                 console.log(e);
+             });
+     }
+
 
     function displayDescription(job){
         setjobDescription( job.description)
@@ -14,24 +42,13 @@ function SavedJobs(){
 
     function deleteJob(job){
         const id = job._id;
-        jobsService.delete(id, job)
+        fetch(`http://localhost:8001/api/${id}`, {
+            method: 'DELETE'
+        })
+        getSaved()
     }
 
     useEffect(() => {
-        const getSaved = () => {
-            jobsService.getSavedJobs()
-                .then(response => {
-                    if(response.data.isLoggedIn){
-                    setSavedJobs(response.data.jobs)
-                    }else{
-                        navigate("/")
-                    }
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-        }
-
         getSaved();
     }, []);
 

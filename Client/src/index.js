@@ -10,6 +10,7 @@ import LinkedInJobs from "./components/LinkedInJobs";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./layouts/Navbar";
 import history from "./History";
+import SavedJobs from "./components/SavedJobs";
 
 // const [isLoggedIn] = useState(true)
 
@@ -25,7 +26,7 @@ ReactDOM.render(
         <Route path="/google" element={<GoogleJobs />} />
         <Route path="/linkedin" element={<LinkedInJobs />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/navbar" element={<Navbar />} />
+        <Route path="/saved" element={<SavedJobs />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

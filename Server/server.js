@@ -265,10 +265,11 @@ app.get('/api/savedjobs', verifyJWT, (req, res) => {
 
 app.delete('/api/:id', (req, res) => {
     const { id } = req.params;
+
     repository.deleteById(id).then((ok) => {
         console.log(ok);
-        console.log(`Deleted record with id: ${id}`);
-        res.status(200).json([]);
+        console.log(`Deleted job with id: ${id}`);
+        res.status(200).json();
     }).catch((error) => console.log(error));
 });
 
