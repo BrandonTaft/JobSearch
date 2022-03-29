@@ -9,7 +9,6 @@ import Portfolio from "./components/Portfolio";
 import GoogleJobs from "./components/GoogleJobs";
 import LinkedInJobs from "./components/LinkedInJobs";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Navbar from "./components/Navbar";
 import history from "./History";
 import SavedJobs from "./components/SavedJobs";
 

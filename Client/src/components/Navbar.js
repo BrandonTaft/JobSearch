@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 //import logo from "../img/logo.png";
 //import style from "../css/navbar.module.css";
-import { NavLink, useNavigate} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../css/nav.css";
-import Cookies from 'js-cookie';
 //import cx from 'classNameNames';
 
 
@@ -13,13 +12,6 @@ import Cookies from 'js-cookie';
 // }
 
  function Navbar() {
-    const navigate = useNavigate();
-    function logout(){
-        localStorage.clear();
-        Cookies.remove('jsonwebtoken')
-        navigate("/")
-    }
-
     
     const [isActive, setActive] = useState("false");
 
@@ -41,7 +33,6 @@ import Cookies from 'js-cookie';
             </div>
             <div className={`main-nav-list ${isActive ? "active" : ""}`}>
                 <ul>
-                    <button onClick={logout}>Logout</button>
                     <NavLink to="/logout"  >Log Out</NavLink>
                     <NavLink to="/linkedin"  >Linked In</NavLink>
                     <NavLink to="/google"  >Google</NavLink>

@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import { useEffect} from "react";
 import { useNavigate} from "react-router-dom";
 import Cookies from 'js-cookie';
 
@@ -14,5 +14,6 @@ useEffect(() => {
     signOut();
 }, );
 
+return null
 }
 export default Logout
