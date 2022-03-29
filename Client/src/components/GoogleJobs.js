@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import style from "../css/googleJobs.module.css";
-import Navbar from "../layouts/Navbar";
+import Navbar from "./Navbar";
 import Cookies from 'js-cookie';
 
 
@@ -58,7 +58,7 @@ function GoogleJobs() {
         }
 
         getGoogleJobs();
-    }, [])
+    }, )
 
     const leftDisplay = googleJobs.map(job => {
         return (

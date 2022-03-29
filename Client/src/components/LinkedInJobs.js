@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import style from "../css/linkedInJobs.module.css";
-import Navbar from "../layouts/Navbar";
+import Navbar from "./Navbar";
 import Cookies from 'js-cookie';
 
 
@@ -57,7 +57,7 @@ function LinkedInJobs() {
         }
 
         getLinkedInJobs();
-    }, [])
+    }, )
 
     const leftDisplay = linkedInJobs.map(job => {
         return (

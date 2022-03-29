@@ -1,13 +1,19 @@
-import JobsService from "../services/jobs-service";
 import { useState } from 'react';
 import style from "../css/portfolio.module.css";
-import Navbar from "../layouts/Navbar";
+import Navbar from "./Navbar";
 
 function Portfolio() {
     const serverBaseURI = 'http://localhost:8001';
     const date = new Date().getDay()
     const [pic, setPic] = useState([])
-    JobsService.checkPortfolio()
+    const token = localStorage.getItem('token')
+   // JobsService.checkPortfolio()
+   fetch("http://localhost:8001/api/portfolio", {
+       method: 'GET',
+       headers:{
+        'authorization': `Bearer ${token}`
+       }
+   })
         .then(response => {
             setPic(response.data)
         })

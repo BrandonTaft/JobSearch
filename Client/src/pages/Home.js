@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import style from "../css/home.module.css";
-import Navbar from "../layouts/Navbar";
+import Navbar from "../components/Navbar";
 import Portfolio from "../components/Portfolio";
 import SavedJobs from "../components/SavedJobs";
 import GoogleJobs from "../components/GoogleJobs";
