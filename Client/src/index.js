@@ -12,7 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import history from "./History";
 import SavedJobs from "./components/SavedJobs";
 
-// const [isLoggedIn] = useState(true)
+
 
 ReactDOM.render(
 
